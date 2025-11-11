@@ -8,7 +8,7 @@ const PrivateRoutes = () => {
 
   return isAuntenticated
     ? <Outlet />
-    : <Navigate to="/login" replace />;
+    : <Navigate to="/products-list" replace />;
 };
 
 export default PrivateRoutes;

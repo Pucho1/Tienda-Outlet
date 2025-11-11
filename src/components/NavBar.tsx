@@ -6,7 +6,6 @@ import { Menu, X, LogOut, User } from 'lucide-react';
 
 // import { useAuthStore } from '../context/AuthContext';
 // import CustomSwitch from './CustomSwitch';
-import useStore from '../store/useZTanDStore';
 import { useAuthStore } from '../store/authZustandStore';
 
 
@@ -15,7 +14,6 @@ const Navbar = () => {
 
   const navigate           = useNavigate();
   const { t }              = useTranslation();
-  const { cartProducts  }  = useStore();
 
   const logOut     = () =>  useAuthStore.getState().logout() ;
   const toggleMenu = () =>  setIsMenuOpen(!isMenuOpen) ;
@@ -40,17 +38,6 @@ const Navbar = () => {
           {/* User actions - visible on all screens */}
           <div className="flex items-center space-x-4">
             
-            {/* Shopping Cart */}
-            <button 
-              className="text-gray-600 hover:text-gray-900 flex"
-              onClick={() => navigate('/cart')}
-              aria-label="Shopping Cart"
-            >
-              <span className="text-sm font-medium ml-1">
-                {cartProducts .length ? `${cartProducts .length}` : ' '}
-              </span>
-            </button>
-
             {/* User Profile */}
             <button
               className="text-gray-600 hover:text-gray-900"

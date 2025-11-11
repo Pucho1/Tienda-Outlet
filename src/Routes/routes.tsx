@@ -1,31 +1,37 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 
+import Layout from '../components/Layout';
 import PrivateRoutes from "./PrivateRoutes";
-import PublicRoutes from "./PublicsRoutes";
-import Layout from "../components/Layout";
+import PublicRoute from "./PublicsRoutes";
 
 
 export const router = createBrowserRouter([
   {
+    element: <Layout />,
+    children:[
+      {
+        path: "/products-list",
+        lazy: async () => {
+          const { default: Products } = await import("../pages/Products/Products");
+          return { Component: Products };
+        },
+      },
+      {
+        path: "/product/:id",
+        lazy: async () => {
+          const { default: Products } = await import("../pages/Products/Products");
+          return { Component: Products };
+        },
+      },
+    ]
+  },
+
+  {
     element: <PrivateRoutes />,
-    children: [
+    children:[
       {
         element: <Layout />,
         children: [
-          {
-            path: "/products-list",
-            lazy: async () => {
-              const { default: Products } = await import("../pages/Products/Products");
-              return { Component: Products };
-            },
-          },
-          {
-            path: "/product/:id",
-            lazy: async () => {
-              const { default: ProductDetail } = await import("../pages/ProductDetail");
-              return { Component: ProductDetail };
-            },
-          },
           {
             path: "/user",
             lazy: async () => {
@@ -33,39 +39,35 @@ export const router = createBrowserRouter([
               return { Component: UserPage };
             },
           },
-          {
-            path: "/cart",
-            lazy: async () => {
-              const { default: ShopCart } = await import("../pages/ShopCar/ShopCart");
-              return { Component: ShopCart };
-            },
-          },
-          {
-            path: "/",
-            loader: () => redirect("/products-list"),
-          },
-          {
-            path: "*",
-            loader: () => redirect("/products-list"),
-          },
-        ],
+        ]
       },
     ],
   },
+
   {
-    element: <PublicRoutes />,
-    children: [
+    element: <PublicRoute />,
+    children:[
       {
-        path: "/login",
-        lazy: async () => {
-          const { default: Login } = await import("../pages/Login/Login");
-          return { Component: Login };
-        },
-      },
-      {
-        path: "*",
-        loader: () => redirect("/login"),
+        element: <Layout />,
+        children: [
+          {
+            path: "/admin/login",
+            lazy: async () => {
+              const { default: Login } = await import("../pages/Login/Login");
+              return { Component: Login };
+            },
+          },
+        ]
       },
     ],
+  },
+
+  {
+    path: "/",
+    loader: () => redirect("/products-list"),
+  },
+  {
+    path: "*",
+    loader: () => redirect("/products-list"),
   },
 ]);

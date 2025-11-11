@@ -47,7 +47,7 @@ export const useAuthStore = create<AuthState>()(
       }),
 
     }),
-    // ------> si quiero agregar persitenciua deirectamente en el store de zustand, lo hago así:
+    // ------> si quiero agregar persistencia directamente en el store de zustand, lo hago así:
     // {
     //   name: 'authStorage', // unique name
     //   // getStorage: () => sessionStorage, // (default) by using sessionStorage instead of localStorage
