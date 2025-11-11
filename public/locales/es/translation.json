@@ -1,0 +1,18 @@
+{
+  "welcome": "Bienbenido!",
+  "description": "This is an example",
+  "LOGOUT": "Salir",
+  "GO_BACK": "Volver atras",
+  "PROFILE": "perfil",
+  "LAST_UPDATED": "Ultima entrada",
+  "USER_ID": "ID del usuario",
+  "NAME": "Name",
+  "USER_NAME": "Nombre del usuario",
+  "EMAIL": "Email",
+  "EMAIL_ADDRES":  "Correo electronico",
+  "PASSWORD": "Contraseña",
+  "SIGN_IN": "Iniciar sesión",
+  "ACOUNT_OVERVIEW": "Resumen de la cuenta",
+  "FULL_NAME": "Nombre",
+  "GENDER": "Genero"
+}
