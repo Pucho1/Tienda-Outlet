@@ -4,19 +4,20 @@ import { useTranslation } from 'react-i18next';
 
 import { Menu, X, LogOut, User } from 'lucide-react';
 
-// import { useAuthStore } from '../context/AuthContext';
-// import CustomSwitch from './CustomSwitch';
 import { useAuthStore } from '../store/authZustandStore';
 
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navigate           = useNavigate();
-  const { t }              = useTranslation();
+  const isAuntenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const logOut     = () =>  useAuthStore.getState().logout() ;
-  const toggleMenu = () =>  setIsMenuOpen(!isMenuOpen) ;
+
+  const navigate   = useNavigate();
+  const { t }      = useTranslation();
+
+  const logOut     = () => useAuthStore.getState().logout();
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
@@ -36,7 +37,7 @@ const Navbar = () => {
           </div>
 
           {/* User actions - visible on all screens */}
-          <div className="flex items-center space-x-4">
+          {isAuntenticated && <div className="flex items-center space-x-4">
             
             {/* User Profile */}
             <button
@@ -46,7 +47,6 @@ const Navbar = () => {
             >
               <User className="h-6 w-6" />
             </button>
-
 
             {/* Logout button - hidden on mobile, shown on tablet/desktop */}
             <button
@@ -69,7 +69,7 @@ const Navbar = () => {
                 <Menu className="h-6 w-6" />
               )}
             </button>
-          </div>
+          </div>}
         </div>
         
         {/* Mobile menu - only visible when toggled */}
