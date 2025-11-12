@@ -61,8 +61,8 @@ pipeline{
 		 stage('Build Docker Image') {
 			steps {
 				script {
-					docker.build("pucho1/form-app:${env.BUILD_NUMBER}")
-					docker.build("pucho1/form-app:latest")
+					docker.build("pucho1/tienda_outlet:${env.BUILD_NUMBER}")
+					docker.build("pucho1/tienda_outlet:latest")
 				}
 			}
 		}
