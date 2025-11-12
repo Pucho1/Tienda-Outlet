@@ -36,7 +36,7 @@ pipeline{
 		stage('SonarQube Analysis') {
 			steps{
 				echo 'Running SonarQube analysis...'
-				whitSonarQubeEnv('SonarQube'){
+				withSonarQubeEnv('SonarQube'){
 					sh "${SCANNER_SONAR}/bin/sonar-scanner"
 				}
 			}
