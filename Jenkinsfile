@@ -26,27 +26,27 @@ pipeline{
 					sh 'npm ci || npm install'
 				}
 			}
-        stage('Test') {
-					steps {
-						echo 'Testing...'
-						sh 'npm run test'
-					}
-        }
-
-				stage('SonarQube Analysis') {
-					steps{
-						echo 'Running SonarQube analysis...'
-						whitSonarQubeEnv('SonarQube'){
-							sh "${SCANNER_SONAR}/bin/sonar-scanner"
-						}
-					}
+			stage('Test') {
+				steps {
+					echo 'Testing...'
+					sh 'npm run test'
 				}
+			}
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-                // Add your deploy steps here
-            }
-        }
+		stage('SonarQube Analysis') {
+			steps{
+				echo 'Running SonarQube analysis...'
+				whitSonarQubeEnv('SonarQube'){
+					sh "${SCANNER_SONAR}/bin/sonar-scanner"
+				}
+			}
+		}
+
+			stage('Deploy') {
+				steps {
+					echo 'Deploying...'
+					// Add your deploy steps here
+				}
+			}
     }
 }
