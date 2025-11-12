@@ -42,11 +42,36 @@ pipeline{
 			}
 		}
 
-			stage('Deploy') {
-				steps {
-					echo 'Deploying...'
-					// Add your deploy steps here
+		stage('Snyk Test') {
+			steps {
+				withCredentials([string(credentialsId: 'Snik_credentials', variable: 'SNYK_TOKEN')]) {
+				// snyk auth <tu_token> ----> Autentica Jenkins (el agente) con tu cuenta de Snyk usando tu token personal.
+				// snyk test ----> Ejecuta un análisis de seguridad en el proyecto actual.
+				sh '''
+					npm install snyk --no-save
+					npx snyk auth $SNYK_TOKEN
+					npx snyk test
+					npx snyk monitor
+					npx snyk test --severity-threshold=high
+				'''
 				}
 			}
+		}
+
+		 stage('Build Docker Image') {
+			steps {
+				script {
+					docker.build("pucho1/tienda_outlet:${env.BUILD_NUMBER}")
+					docker.build("pucho1/tienda_outlet:latest")
+				}
+			}
+		}
+
+		stage('Deploy') {
+			steps {
+				echo 'Deploying...'
+				// Add your deploy steps here
+			}
+		}
     }
 }
