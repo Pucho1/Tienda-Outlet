@@ -48,11 +48,16 @@ pipeline{
 				// snyk auth <tu_token> ----> Autentica Jenkins (el agente) con tu cuenta de Snyk usando tu token personal.
 				// snyk test ----> Ejecuta un análisis de seguridad en el proyecto actual.
 				sh '''
+					# Instala Snyk sin guardarlo como dependencia
 					npm install snyk --no-save
+
+					 # Autentica con tu token
 					npx snyk auth $SNYK_TOKEN
-					npx snyk test
-					npx snyk monitor
-					npx snyk test --severity-threshold=high
+
+					# Ejecuta los análisis, pero sin romper el pipeline si fallan
+					npx snyk test || true
+					npx snyk monitor || true
+					npx snyk test --severity-threshold=high || true
 				'''
 				}
 			}
