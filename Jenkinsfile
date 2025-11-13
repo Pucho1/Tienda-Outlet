@@ -10,28 +10,28 @@ pipeline{
 
     stages{
 
-      stage('Checkout') {
-        steps {
-					echo 'Checking out code...'
-					sh 'which git' // <-- Línea de diagnóstico
-					git branch: 'main',
-					credentialsId: 'GitCredentials',
-					url: REPO_URL
-				}
-		  }
+      	stage('Checkout') {
+        	steps {
+				echo 'Checking out code...'
+				sh 'which git' // <-- Línea de diagnóstico
+				git branch: 'main',
+				credentialsId: 'GitCredentials',
+				url: REPO_URL
+			}
+		}
 
-			stage('Build') {
-				steps {
-					echo 'Building...'
-					sh 'npm ci || npm install'
-				}
+		stage('Build') {
+			steps {
+				echo 'Building...'
+				sh 'npm ci || npm install'
 			}
-			stage('Test') {
-				steps {
-					echo 'Testing...'
-					sh 'npm run test'
-				}
+		}
+		stage('Test') {
+			steps {
+				echo 'Testing...'
+				sh 'npm run test'
 			}
+		}
 
 		stage('SonarQube Analysis') {
 			steps{
@@ -63,11 +63,25 @@ pipeline{
 			}
 		}
 
-		 stage('Build Docker Image') {
+		stage('Build Docker Image') {
 			steps {
 				script {
 					docker.build("pucho1/tienda_outlet:${env.BUILD_NUMBER}")
 					docker.build("pucho1/tienda_outlet:latest")
+				}
+			}
+		}
+
+		stage('Push Docker image') {
+			steps {
+				withCredentials([usernamePassword(credentialsId: 'dockerHub_credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+				script {
+					sh """
+						echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+						docker push $DOCKER_USER/tienda_outlet:${BUILD_NUMBER}
+						docker push $DOCKER_USER/tienda_outlet:latest
+					"""
+				}
 				}
 			}
 		}
