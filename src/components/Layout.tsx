@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import NavBar from "./NavBar";
+import NavBar from "./Navbar/NavBar";
 
   const Layout = () => {
 
@@ -9,7 +9,7 @@ import NavBar from "./NavBar";
         <NavBar />
       </header>
 
-      <main className='max-w-7xl mx-auto py-6 px-4 pt-20' > 
+      <main className='max-w-7xl mx-auto py-6 pt-20' > 
         <Outlet />
       </main>
     </>
