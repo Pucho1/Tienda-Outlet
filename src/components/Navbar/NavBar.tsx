@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Menu, X, LogOut, User } from 'lucide-react';
 
-import { useAuthStore } from '../store/authZustandStore';
+import { useAuthStore } from '../../store/authZustandStore';
 
 
 const Navbar = () => {
@@ -25,8 +25,8 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo and brand */}
           <div className="flex items-center space-x-8">
-            <NavLink to="/" className="text-xl font-bold text-blue-600">
-              TechStore
+            <NavLink to="/" className="font-playfair text-lg lg:text-xl text-gray-600 uppercase font-semibold">
+              Outlet Shop
             </NavLink>
               {/* Desktop Navigation */}
             <div className="hidden md:flex items-center">

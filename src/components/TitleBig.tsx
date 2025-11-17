@@ -1,8 +1,8 @@
 
 const TitleBig = () => {
   return (
-    <div className="text-8xl font-black">
-        <p className="font-oswald">Outlet</p>
+    <div className="text-[5rem] md:text-9xl lg:text-[12rem] font-black  tracking-tight text-black">
+        <p className="font-playfair uppercase">Outlet</p>
     </div>
   );
 };
