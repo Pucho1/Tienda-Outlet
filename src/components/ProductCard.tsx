@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+// import { ArrowRight } from 'lucide-react';
 import { Product } from '../interfaces/product';
 
 interface ProductCardProps {
@@ -8,6 +8,12 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, onClick }: ProductCardProps) => {
 
+  const calcularDescuento = (price: number): {aumento:number, porcent: number} => {
+    const aumento = price + 10;
+    const porcent = 0;
+    return {aumento , porcent};
+  }
+
 
   return (
     <div
@@ -16,22 +22,19 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
     >
       <img
         src={product.images[0]}
-        alt={product.title}
-        className="w-full h-48 md:50 object-cover"
+        alt={product.name}
+        className="w-full h-80 md:50 object-cover"
       />
-      <div className="p-4 h-50 flex-col flex justify-between">
-        <h3 className="text-xl font-semibold text-gray-800 multiline-ellipsis">{product.title}</h3>
-        <p className="text-gray-600 mt-1">{product.category}</p>
+      <div className="p-4 h-30 flex-col flex justify-between">
+        {/* <h3 className="text-xl font-semibold text-gray-800 multiline-ellipsis">{product.name}</h3> */}
+        <p className="text-sm text-gray-600 mt-1">{product.description}</p>
         <div className="mt-4 flex justify-between items-center">
-          <span className="text-2xl font-bold text-blue-600">
+          <span className="text-lg font-bold">
+            ${calcularDescuento(product.price).aumento }
+          </span>
+          <span className="text-lg font-bold">
             ${product.price}
           </span>
-          <button
-            className="flex items-center text-blue-600 hover:text-blue-800"
-            onClick={onClick}
-          >
-            Ver más <ArrowRight className="ml-1 h-4 w-4" />
-          </button>
         </div>
       </div>
     </div>

@@ -5,13 +5,13 @@ import "./gallery.css"
 
 const images = [
   {
-    original:  "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763372435/HB_fowi3l.png",
+    original:  "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763495865/modelo_llevando_este_abrigo_de_la_monclear_2_ofkdqv.jpg",
   },
   {
-    original: "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763403338/HB2_oggw07.png",
+    original: "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763495815/modelo_llevando_este_abrigo_de_la_monclear_1_a6sdak.jpg",
   },
   {
-    original: "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763403369/de_hugo_2_ur6in3.png",
+    original: "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763495799/modelo_llevando_este_abrigo_de_la_monclear_cwitlf.jpg",
   },
 ];
 
