@@ -32,7 +32,7 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
         <h3 className="font-bold text-gray-800 multiline-ellipsis">{product.name}</h3>
 
         {/* DESCRIPTION */}
-        <p className="text-sm text-gray-600 mt-1">{product.description}</p>
+        <p className="text-sm text-gray-600 mt-1 w-full truncate">{product.description}</p>
 
         {/* PRICES */}
         <div className="mt-4 flex flex-col">
