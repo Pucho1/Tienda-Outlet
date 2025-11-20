@@ -17,7 +17,7 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
 
   return (
     <div
-      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform hover:scale-105"
+      className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105"
       onClick={onClick}
     >
       <img
@@ -25,17 +25,27 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
         alt={product.name}
         className="w-full h-80 md:50 object-cover"
       />
-      <div className="p-4 h-30 flex-col flex justify-between">
-        {/* <h3 className="text-xl font-semibold text-gray-800 multiline-ellipsis">{product.name}</h3> */}
+
+      <div className="p-4 flex-col flex justify-between">
+
+        {/* NAME */}
+        <h3 className="font-bold text-gray-800 multiline-ellipsis">{product.name}</h3>
+
+        {/* DESCRIPTION */}
         <p className="text-sm text-gray-600 mt-1">{product.description}</p>
-        <div className="mt-4 flex justify-between items-center">
-          <span className="text-lg font-bold">
+
+        {/* PRICES */}
+        <div className="mt-4 flex flex-col">
+
+          <span className="hidden text-lg font-bold">
             ${calcularDescuento(product.price).aumento }
           </span>
-          <span className="text-lg font-bold">
+
+          <span className="text-lg font-semibold">
             ${product.price}
           </span>
         </div>
+
       </div>
     </div>
   );
