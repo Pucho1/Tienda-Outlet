@@ -1,0 +1,252 @@
+import { useState, useRef, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+interface ScrollableNavbarProps {
+  sections: string[];
+}
+
+export function ScrollableNavbar({ sections }: ScrollableNavbarProps) {
+  const [activeSection, setActiveSection] = useState('');
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const desktopScrollRef = useRef<HTMLDivElement>(null);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<number | null>(null);
+
+  const handleScroll = (container: HTMLDivElement | null) => {
+    if (!container) return;
+
+    setShowLeftArrow(container.scrollLeft > 10);
+    setShowRightArrow(
+      container.scrollLeft < container.scrollWidth - container.clientWidth - 10
+    );
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartRef.current === null) return;
+
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStartRef.current - touchEnd;
+    const container = e.currentTarget;
+
+    if (Math.abs(diff) > 10) {
+      if (diff > 0) {
+        container.scrollBy({ left: 100, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ left: -100, behavior: 'smooth' });
+      }
+    }
+
+    touchStartRef.current = null;
+  };
+
+  const scrollLeft = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollBy({ left: -200, behavior: 'smooth' });
+  };
+
+  const scrollRight = (ref: React.RefObject<HTMLDivElement | null>) => {
+    ref.current?.scrollBy({ left: 200, behavior: 'smooth' });
+  };
+
+  const scrollToSection = (section: string) => {
+    const id = section.toLowerCase().replace(/\s+/g, '-');
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
+    // setMobileMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleScrollEvent = () => {
+      if (desktopScrollRef.current) {
+        handleScroll(desktopScrollRef.current);
+      }
+      if (mobileScrollRef.current) {
+        handleScroll(mobileScrollRef.current);
+      }
+    };
+
+    desktopScrollRef.current?.addEventListener('scroll', handleScrollEvent);
+    mobileScrollRef.current?.addEventListener('scroll', handleScrollEvent);
+
+    handleScrollEvent();
+
+    return () => {
+      desktopScrollRef.current?.removeEventListener('scroll', handleScrollEvent);
+      mobileScrollRef.current?.removeEventListener('scroll', handleScrollEvent);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach((section) => {
+      const id = section.toLowerCase().replace(/\s+/g, '-');
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [sections]);
+
+  return (
+    <>
+      <nav className="top-40 left-0 right-0 bg-white shadow-md z-50">
+        <div className="max-w-full">
+          <div className="flex items-center justify-between px-4 py-3 lg:px-6">
+
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">L</span>
+              </div>
+              <span className="font-bold text-gray-800 text-lg hidden sm:block">
+                Logo
+              </span>
+            </div>
+
+            <div className="hidden lg:flex items-center flex-1 max-w-4xl mx-4 relative group">
+              {showLeftArrow && (
+                <button
+                  onClick={() => scrollLeft(desktopScrollRef)}
+                  className="absolute left-0 z-10 bg-gradient-to-r from-white to-transparent pl-2 pr-8 py-2 rounded-l-lg"
+                >
+                  <ChevronLeft className="w-5 h-5 text-gray-600 hover:text-blue-600 transition-colors" />
+                </button>
+              )}
+
+              <div
+                ref={desktopScrollRef}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                className="flex gap-1 overflow-x-auto scrollbar-hide scroll-smooth px-8 touch-pan-x"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {sections.map((section) => {
+                  const id = section.toLowerCase().replace(/\s+/g, '-');
+                  const isActive = activeSection === id;
+
+                  return (
+                    <button
+                      key={section}
+                      onClick={() => scrollToSection(section)}
+                      className={`px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium transition-all duration-200 ${
+                        isActive
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
+                      }`}
+                    >
+                      {section}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {showRightArrow && (
+                <button
+                  onClick={() => scrollRight(desktopScrollRef)}
+                  className="absolute right-0 z-10 bg-gradient-to-l from-white to-transparent pr-2 pl-8 py-2 rounded-r-lg"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-600 hover:text-blue-600 transition-colors" />
+                </button>
+              )}
+            </div>
+
+            <div className="hidden lg:block w-24"></div>
+          </div>
+
+          <div className="lg:hidden px-4 pb-3 relative">
+            {showLeftArrow && (
+              <button
+                onClick={() => scrollLeft(mobileScrollRef)}
+                className="absolute left-0 z-10 bg-gradient-to-r from-white to-transparent pl-4 pr-6 py-2"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-600" />
+              </button>
+            )}
+
+            <div
+              ref={mobileScrollRef}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth px-8 touch-pan-x"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            >
+              {sections.map((section) => {
+                const id = section.toLowerCase().replace(/\s+/g, '-');
+                const isActive = activeSection === id;
+
+                return (
+                  <button
+                    key={section}
+                    onClick={() => scrollToSection(section)}
+                    className={`px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? 'bg-blue-600 text-white shadow-lg'
+                        : 'text-gray-700 bg-gray-50 hover:bg-gray-100'
+                    }`}
+                  >
+                    {section}
+                  </button>
+                );
+              })}
+            </div>
+
+            {showRightArrow && (
+              <button
+                onClick={() => scrollRight(mobileScrollRef)}
+                className="absolute right-0 top-0 z-10 bg-gradient-to-l from-white to-transparent pr-4 pl-6 py-2"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-600" />
+              </button>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* {mobileMenuOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden">
+          <div className="fixed right-0 top-0 bottom-0 w-64 bg-white shadow-xl p-6 overflow-y-auto">
+            <div className="flex flex-col gap-2 mt-16">
+              {sections.map((section) => {
+                const id = section.toLowerCase().replace(/\s+/g, '-');
+                const isActive = activeSection === id;
+
+                return (
+                  <button
+                    key={section}
+                    onClick={() => scrollToSection(section)}
+                    className={`px-4 py-3 rounded-lg text-left font-medium transition-all duration-200 ${
+                      isActive
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {section}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )} */}
+    </>
+  );
+}
