@@ -1,5 +1,6 @@
 // import { ArrowRight } from 'lucide-react';
 import { Product } from '../interfaces/product';
+import GalleryImage from './galleryImage/GalleryImage';
 
 interface ProductCardProps {
   product: Product;
@@ -14,17 +15,25 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
     return {aumento , porcent};
   }
 
+  const oferta = true;
 
   return (
     <div
-      className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105"
+      className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 relative"
       onClick={onClick}
     >
-      <img
+      <div className="w-full object-contain object-center">
+        <GalleryImage images={product.images}/>
+      </div>
+      {/* <img
         src={product.images[0]}
         alt={product.name}
         className="w-full h-80 md:50 object-cover"
-      />
+      /> */}
+
+     {oferta && <div className="flex items-center bg-red-500 absolute bottom-37 w-15 pl-2 h-6">
+          <p className='text-sm text-white font-semibold'>Oferta</p>
+      </div>}
 
       <div className="p-4 flex-col flex justify-between">
 
@@ -37,13 +46,13 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
         {/* PRICES */}
         <div className="mt-4 flex flex-col">
 
-          <span className="hidden text-lg font-bold">
+          <p className="hidden text-lg font-bold proportional-nums">
             ${calcularDescuento(product.price).aumento }
-          </span>
+          </p>
 
-          <span className="text-lg font-semibold">
+          <p className="font-bold proportional-nums">
             ${product.price}
-          </span>
+          </p>
         </div>
 
       </div>

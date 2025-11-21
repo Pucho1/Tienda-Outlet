@@ -1,4 +1,4 @@
 .my-gallery .image-gallery-image {
-  height: 65vh;     /* alto que tú quieras */
+  height: 40vh;     /* alto que tú quieras */
   object-fit: cover; /* cover, contain, fill */
 }

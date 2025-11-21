@@ -3,7 +3,7 @@ import ImageGallery from 'react-image-gallery';
 
 import "./gallery.css"
 
-const images = [
+const baseImages = [
   {
     original:  "https://res.cloudinary.com/dgzhfz56t/image/upload/v1763495865/modelo_llevando_este_abrigo_de_la_monclear_2_ofkdqv.jpg",
   },
@@ -15,9 +15,13 @@ const images = [
   },
 ];
 
-const GalleryImage = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const GalleryImage = ({ images }: { images: any }) => {
+
+  const imagesToShow = images.length === 0  ?  baseImages : images
+
   return <ImageGallery 
-          items={images} 
+          items={imagesToShow} 
           showThumbnails={false} 
           showFullscreenButton={false}
           additionalClass="my-gallery"
