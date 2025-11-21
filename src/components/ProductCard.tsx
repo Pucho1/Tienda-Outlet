@@ -25,11 +25,6 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
       <div className="w-full object-contain object-center">
         <GalleryImage images={product.images}/>
       </div>
-      {/* <img
-        src={product.images[0]}
-        alt={product.name}
-        className="w-full h-80 md:50 object-cover"
-      /> */}
 
      {oferta && <div className="flex items-center bg-red-500 absolute bottom-37 w-15 pl-2 h-6">
           <p className='text-sm text-white font-semibold'>Oferta</p>
