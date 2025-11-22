@@ -5,7 +5,6 @@ import useProducts from "./useProducts";
 import { ProductCard } from "../../components/ProductCard";
 import { Product } from "../../interfaces/product";
 import TitleBig from "../../components/TitleBig";
-// import GalleryImage from "../../components/galleryImage/GalleryImage";
 
 const Products = () => {
 

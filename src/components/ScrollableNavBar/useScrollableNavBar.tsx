@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { ScrollableNavbarProps } from "./ScrollableNavbar";
+import { ScrollableNavbarProps } from "../../interfaces/scrollableNavBarInterface";
 
 const useScrollableNavBar = ({ sections }: ScrollableNavbarProps) => {
   const [activeSection, setActiveSection] = useState('');
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const desktopScrollRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const touchStartRef = useRef<number | null>(null);
-
-
+  
   
   const handleScroll = (container: HTMLDivElement | null) => {
     if (!container) return;
@@ -58,8 +56,7 @@ const useScrollableNavBar = ({ sections }: ScrollableNavbarProps) => {
     // setMobileMenuOpen(false);
   };
 
-
-    useEffect(() => {
+  useEffect(() => {
     const handleScrollEvent = () => {
       if (desktopScrollRef.current) {
         handleScroll(desktopScrollRef.current);

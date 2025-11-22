@@ -1,16 +1,7 @@
 import { create } from 'zustand';
-import { UserData } from '../interfaces/userInterface';
+
 import { LoginResponse } from '../interfaces/loginResponse';
-
-interface AuthState {
-  accessToken: string | null;
-  setAccessToken: (token: string) => void;
-  useReg: UserData | null;
-  isAuthenticated: boolean;
-  login: (loginData: LoginResponse) => void;
-  logout: () => void;
-}
-
+import { AuthState } from '../interfaces/authState';
 
 /**
  * * @description Store de Zustand para manejar el token de acceso.
@@ -19,7 +10,6 @@ interface AuthState {
  */
 
 export const useAuthStore = create<AuthState>()( 
-  // persist ( //--agrego persistencia al store de zustand--
     (set) => ({
       accessToken: null,
       useReg: null,
@@ -47,10 +37,4 @@ export const useAuthStore = create<AuthState>()(
       }),
 
     }),
-    // ------> si quiero agregar persistencia directamente en el store de zustand, lo hago así:
-    // {
-    //   name: 'authStorage', // unique name
-    //   // getStorage: () => sessionStorage, // (default) by using sessionStorage instead of localStorage
-    // }
-  // )
 );

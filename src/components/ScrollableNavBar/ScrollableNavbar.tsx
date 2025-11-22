@@ -1,15 +1,14 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import useScrollableNavBar from './useScrollableNavBar';
+import BTNS_NAMES from '../../store/freezeBtnObject';
 
-export interface ScrollableNavbarProps {
-  sections: string[];
-}
+export function ScrollableNavbar() {
 
-export function ScrollableNavbar({ sections }: ScrollableNavbarProps) {
+  const sections  = Object.values(BTNS_NAMES);
 
-  const {activeSection, 
-    showLeftArrow, 
-    showRightArrow, 
+  const {activeSection,
+    showLeftArrow,
+    showRightArrow,
     desktopScrollRef,
     mobileScrollRef,
     scrollToSection,
@@ -17,7 +16,6 @@ export function ScrollableNavbar({ sections }: ScrollableNavbarProps) {
     scrollLeft,
     handleTouchEnd,
     handleTouchStart,
-
   } = useScrollableNavBar({sections});
 
   return (
@@ -26,16 +24,18 @@ export function ScrollableNavbar({ sections }: ScrollableNavbarProps) {
         <div className="max-w-full">
           <div className="flex items-center justify-between px-4 py-3 lg:px-6">
 
+            {/* LOGO */}
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">L</span>
+                <span className="text-white font-bold text-sm">OLT</span>
               </div>
               <span className="font-bold text-gray-800 text-lg hidden sm:block">
-                Logo
+                Outlet
               </span>
             </div>
 
-            <div className="hidden lg:flex items-center flex-1 max-w-4xl mx-4 relative group">
+            {/*  */}
+            <div className="hidden lg:flex items-center flex-1 max-w-[55rem] xl:max-w-[65rem] 2xl:max-w-[85rem] mx-4 relative group">
               {showLeftArrow && (
                 <button
                   onClick={() => scrollLeft(desktopScrollRef)}

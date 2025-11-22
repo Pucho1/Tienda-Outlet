@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+
 import { Product } from '../interfaces/product';
 import { carShopState } from '../interfaces/store';
 
@@ -26,7 +27,7 @@ const useStore = create<carShopState>((set) => ({
       return {
         cartProducts: [...state.cartProducts, { ...newProduct, quantity: 1 }]
       };
-    }),
+  }),
 
   deleteProductByID: (id: number) => set((state: carShopState) => (
     { cartProducts : state.cartProducts .filter((product) => product.id !== id) }
