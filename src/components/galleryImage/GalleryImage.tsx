@@ -20,7 +20,7 @@ const GalleryImage = ({ images }: { images: any }) => {
 
   const imagesToShow = images.length === 0  ?  baseImages : images
 
-  return <ImageGallery 
+  return <ImageGallery
           items={imagesToShow} 
           showThumbnails={false} 
           showFullscreenButton={false}
@@ -28,7 +28,6 @@ const GalleryImage = ({ images }: { images: any }) => {
           autoPlay
           showPlayButton={false}
           showNav={false}
-          // swipingTransitionDuration= {12}
           slideInterval={6000}
         />;
 };
