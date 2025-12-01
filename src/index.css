@@ -1,4 +1,8 @@
  @import "tailwindcss";
+ @theme {  --font-oswald: "Oswald", sans-serif;}
+ @theme {  --font-pragati: "Pragati Narrow", sans-serif;}
+ @theme {  --font-playfair: "Playfair Display", sans-serif;}
+ 
 /*
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

@@ -33,13 +33,13 @@ const ProductDetail = () => {
         <div>
           <img
             src={product.images[0]}
-            alt={product.title}
+            alt={product.name}
             className="w-full h-[400px] object-cover rounded-lg"
           />
         </div>
         
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
           <p className="text-gray-600 mt-2">{product.category}</p>
           
           <div className="mt-6">

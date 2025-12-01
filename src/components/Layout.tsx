@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import NavBar from "./NavBar";
+import { ScrollableNavbar } from './ScrollableNavBar/ScrollableNavbar';
 
   const Layout = () => {
 
   return (
     <>
       <header>
-        <NavBar />
+        <ScrollableNavbar />
       </header>
 
-      <main className='max-w-7xl mx-auto py-6 px-4 pt-20' > 
+      <main className='max-w-7xl mx-auto py-6 pt-10' > 
         <Outlet />
       </main>
     </>
