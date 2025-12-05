@@ -25,6 +25,7 @@ const GalleryImage = ({ images }: { images: any }) => {
           showThumbnails={false} 
           showFullscreenButton={false}
           additionalClass="my-gallery"
+          disableSwipe={true}
           autoPlay
           showPlayButton={false}
           showNav={false}
