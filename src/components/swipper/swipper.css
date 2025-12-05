@@ -1,0 +1,32 @@
+.swiper-slide{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mySwiper .swiper-slide img {
+  height: 45vh;     /* alto que tú quieras */
+  max-height: 500px;
+  min-height: 300px;
+  object-fit: cover; /* cover, contain, fill */
+  display: block;
+}
+
+@media (40rem <= width ) {
+  .mySwiper .swiper-slide img {
+    height: 50vh;
+  }
+}
+
+@media (48rem <= width ) {
+  .mySwiper .swiper-slide img {
+    height: 55vh;
+  }
+}
+
+@media (64rem <= width ) {
+  .mySwiper .swiper-slide img {
+    height: 60vh;
+    max-height: 600px;
+  }
+}

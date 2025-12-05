@@ -1,6 +1,6 @@
-// import { ArrowRight } from 'lucide-react';
 import { Product } from '../interfaces/product';
-import GalleryImage from './galleryImage/GalleryImage';
+// import GalleryImage from './galleryImage/GalleryImage';
+import Swipper from './swipper/Swipper';
 
 interface ProductCardProps {
   product: Product;
@@ -23,14 +23,14 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
       onClick={onClick}
     >
       <div className="w-full object-contain object-center">
-        <GalleryImage images={product.images}/>
+        <Swipper images={product.images}/>
       </div>
 
-     {oferta && <div className="flex items-center bg-red-500 absolute bottom-37 w-15 pl-2 h-6">
+     {oferta && <div className="flex items-center bg-red-500 absolute z-10 bottom-40 sm:bottom-35 left-[13%] sm:left-[5%] w-15 pl-2 h-6">
           <p className='text-sm text-white font-semibold'>Oferta</p>
       </div>}
 
-      <div className="p-4 flex-col flex justify-between">
+      <div className="p-8 sm:p-5 md:p-4 flex-col flex justify-between">
 
         {/* NAME */}
         <h3 className="font-bold text-gray-800 multiline-ellipsis">{product.name}</h3>
