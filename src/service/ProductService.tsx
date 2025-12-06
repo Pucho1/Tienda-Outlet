@@ -9,7 +9,11 @@ const ProductService = () => {
     return newAxs.get<Product[]>(`/products/all`);
   };
 
-  return { getProductsList };
+   const getProductById = (id: string): Promise<AxiosResponse<Product>> => {
+    return newAxs.get<Product>(`/products/${id}`);
+  };
+
+  return { getProductsList, getProductById };
 };
 
 export default ProductService;
