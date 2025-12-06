@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 
 import { ArrowLeft, Package } from 'lucide-react';
 
-import { useTranslation } from 'react-i18next';
 import { Product } from '../../interfaces/product';
 import useProductDetail from './useProductDetail';
 import Swipper from '../../components/swipper/Swipper';
@@ -13,7 +12,6 @@ const ProductDetail = () => {
 
   useProductDetail(setProductDetail);
   
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const goBack = (): void => { navigate(-1) };
@@ -25,25 +23,24 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg">
 
       {/* GO BACK BTN*/}
       <button
         onClick={goBack}
-        className="flex items-center text-blue-600 hover:text-blue-800 mb-6"
+        className="flex px-6 items-center text-blue-600 hover:text-blue-800 mb-6"
       >
         <ArrowLeft className="mr-2 h-5 w-5" />
-        {t('GO_BACK')}
       </button>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         {/* IMAGE */}
-        <div className="w-full object-contain object-center">
+        <div className="w-full object-contain object-center swipper-details">
           <Swipper images={productDetail.images} />
         </div>
         
-        <div>
+        <div className='px-6'>
           <h1 className="text-3xl font-bold text-gray-900">{productDetail.name}</h1>
           <p className="text-gray-600 mt-2">{productDetail.category}</p>
           
