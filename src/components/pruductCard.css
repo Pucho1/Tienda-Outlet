@@ -1,0 +1,11 @@
+
+	@media (540px <= width < 640px) {
+		.info-card{
+			padding-inline: 35px;
+		}
+
+		.custom-banner-offer{
+			left: 15%;
+		}
+
+}
