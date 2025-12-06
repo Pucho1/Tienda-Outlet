@@ -4,11 +4,18 @@
   align-items: center;
 }
 
+.swipper-details .mySwiper .swiper-slide img{
+  width: 100%;
+  height: 75vh;
+  max-height: 700px;
+
+}
+
 .mySwiper .swiper-slide img {
-  height: 45vh;     /* alto que tú quieras */
+  height: 45vh;
   max-height: 500px;
   min-height: 300px;
-  object-fit: cover; /* cover, contain, fill */
+  object-fit: cover;
   display: block;
 }
 
