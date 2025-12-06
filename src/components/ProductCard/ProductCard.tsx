@@ -1,4 +1,5 @@
 import { Product } from '../../interfaces/product';
+// import Skeleton from '../Skeleton/Skeleton';
 import Swipper from '../swipper/Swipper';
 
 import './pruductCard.css'
@@ -19,14 +20,18 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   const oferta = true;
 
   return (
+    // < Skeleton />
+
+
     <div
       className="rounded-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105 relative"
       onClick={onClick}
     >
+      {/* IMAGES */}
       <div className="w-full object-contain object-center">
         <Swipper images={product.images}/>
       </div>
-
+     {/* OFERTA */}
      {oferta && <div className="flex items-center bg-red-500 absolute z-10 bottom-34 sm:bottom-35 left-[6%] sm:left-[5%] w-15 pl-2 h-6 custom-banner-offer">
           <p className='text-sm text-white font-semibold'>Oferta</p>
       </div>}
