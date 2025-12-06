@@ -1,10 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+
 import ProductService from "../../service/ProductService";
 import normalizedDataResponse from "../../utilities/NormalizedData";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useProducts = ( setProductList: any) => {
+import { Product } from "../../interfaces/product";
+
+
+const useProducts = () => {
+	const [productList, setProductList] = useState<Product[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<any>(null);
+	const navigate = useNavigate();
+
+	const goDetail = (product: Product) => {
+		navigate(`/product/${product.id}`, { state: { product } });
+	};
 
 	
 	useEffect(() => {
@@ -13,13 +25,16 @@ const useProducts = ( setProductList: any) => {
 				console.log("Fetched products:", response.data);
 				const mapedResponse = normalizedDataResponse(response.data);
 				setProductList(mapedResponse);
+				setLoading(false);
 			})
 			.catch((error) => {
+				setError(error);
+				setLoading(false);
 				console.error("Error fetching products:", error);
 			});
 	}, []);
 
-  return {}
+  return {goDetail, productList, loading, error};
 };
 
 export default useProducts;
