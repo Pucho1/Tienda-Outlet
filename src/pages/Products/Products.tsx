@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 import useProducts from "./useProducts";
-import { ProductCard } from "../../components/ProductCard";
+import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { Product } from "../../interfaces/product";
 import TitleBig from "../../components/TitleBig";
 

@@ -1,5 +1,5 @@
-import { Product } from '../interfaces/product';
-import Swipper from './swipper/Swipper';
+import { Product } from '../../interfaces/product';
+import Swipper from '../swipper/Swipper';
 
 import './pruductCard.css'
 
