@@ -2,7 +2,6 @@ import useProducts from "./useProducts";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import TitleBig from "../../components/TitleBig";
 import Skeleton from "../../components/Skeleton/Skeleton";
-// import Skeleton from "../../components/Skeleton/Skeleton";
 
 const Products = () => {
 

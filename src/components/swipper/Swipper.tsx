@@ -24,8 +24,6 @@ const Swipper = ({ images }: { images: any }) => {
 
 	const imagesToShow = images.length === 0  ?  basedImages : images
 
-	console.log('Swipper imagesToShow:', imagesToShow);
-
   return (
 		<Swiper
 			className="mySwiper"

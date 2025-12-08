@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import ProductService from "../../service/ProductService";
-import normalizedDataResponse from "../../utilities/NormalizedData";
+// import normalizedDataResponse from "../../utilities/NormalizedData";
 
 import { Product } from "../../interfaces/product";
 
@@ -22,9 +22,9 @@ const useProducts = () => {
 	useEffect(() => {
 		ProductService().getProductsList()
 			.then((response) => {
+				// const mapedResponse = normalizedDataResponse(response.data);
 				console.log("Fetched products:", response.data);
-				const mapedResponse = normalizedDataResponse(response.data);
-				setProductList(mapedResponse);
+				setProductList(response.data);
 				setLoading(false);
 			})
 			.catch((error) => {

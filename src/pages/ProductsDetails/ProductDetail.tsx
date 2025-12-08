@@ -1,20 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-
 import { ArrowLeft, Package } from 'lucide-react';
 
-import { Product } from '../../interfaces/product';
 import useProductDetail from './useProductDetail';
 import Swipper from '../../components/swipper/Swipper';
 
 const ProductDetail = () => {
-  const [productDetail, setProductDetail] = useState<Product >();
 
-  useProductDetail(setProductDetail);
-  
-  const navigate = useNavigate();
+  const { productDetail, goBack } = useProductDetail();
 
-  const goBack = (): void => { navigate(-1) };
 
   if (!productDetail) {
     return <div className="flex justify-center items-center h-screen">
