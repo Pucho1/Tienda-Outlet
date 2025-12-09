@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import ProductService from "../../service/ProductService";
 import { useLocation, useNavigate } from "react-router";
-// import { Product } from "../../interfaces/product";
 
 const useProductDetail = ( ) => {
 
@@ -14,7 +13,6 @@ const useProductDetail = ( ) => {
 	useEffect(() => {
 		ProductService().getProductById(id)
 			.then((response) => {
-				// const newData = {...response.data, images: response.data.images.map((image: string) => ({ original: image }))};
 				setProductDetail(response.data);
 			})
 			.catch((error) => {

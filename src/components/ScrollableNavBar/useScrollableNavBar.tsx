@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollableNavbarProps } from "../../interfaces/scrollableNavBarInterface";
+import filtersSelectedStore from "../../store/filtersSelected";
 
 const useScrollableNavBar = ({ sections }: ScrollableNavbarProps) => {
   const [activeSection, setActiveSection] = useState('');
@@ -8,7 +9,8 @@ const useScrollableNavBar = ({ sections }: ScrollableNavbarProps) => {
   const desktopScrollRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const touchStartRef = useRef<number | null>(null);
-  
+
+  const { changeFilterSelected } = filtersSelectedStore();
   
   const handleScroll = (container: HTMLDivElement | null) => {
     if (!container) return;
@@ -49,11 +51,13 @@ const useScrollableNavBar = ({ sections }: ScrollableNavbarProps) => {
     ref.current?.scrollBy({ left: 200, behavior: 'smooth' });
   };
 
-  const scrollToSection = (section: string) => {
+  /**
+   * Me lleva a una seccion de la pagina
+   * @param section  section a la que se scroleara de la pantalla
+   */
+  const handlerFilter = (section: string) => {
     const id = section.toLowerCase().replace(/\s+/g, '-');
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
-    // setMobileMenuOpen(false);
+    changeFilterSelected({category: id ?? null});
   };
 
   useEffect(() => {
@@ -115,7 +119,7 @@ const useScrollableNavBar = ({ sections }: ScrollableNavbarProps) => {
     mobileScrollRef,
     touchStartRef,
     handleScroll,
-    scrollToSection,
+    handlerFilter,
     scrollRight,
     scrollLeft,
     handleTouchEnd,

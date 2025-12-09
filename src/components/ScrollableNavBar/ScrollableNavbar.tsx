@@ -6,12 +6,13 @@ export function ScrollableNavbar() {
 
   const sections  = Object.values(BTNS_NAMES);
 
-  const {activeSection,
+  const {
+    activeSection,
     showLeftArrow,
     showRightArrow,
     desktopScrollRef,
     mobileScrollRef,
-    scrollToSection,
+    handlerFilter,
     scrollRight,
     scrollLeft,
     handleTouchEnd,
@@ -36,6 +37,7 @@ export function ScrollableNavbar() {
 
             {/*  */}
             <div className="hidden lg:flex items-center flex-1 max-w-[55rem] xl:max-w-[65rem] 2xl:max-w-[85rem] mx-4 relative group">
+              {/* flecha derecha */}
               {showLeftArrow && (
                 <button
                   onClick={() => scrollLeft(desktopScrollRef)}
@@ -59,7 +61,7 @@ export function ScrollableNavbar() {
                   return (
                     <button
                       key={section}
-                      onClick={() => scrollToSection(section)}
+                      onClick={() => handlerFilter(section)}
                       className={`px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium transition-all duration-200 ${
                         isActive
                           ? 'bg-blue-600 text-white shadow-lg'
@@ -72,6 +74,7 @@ export function ScrollableNavbar() {
                 })}
               </div>
 
+              {/* Flecha izquierda */}
               {showRightArrow && (
                 <button
                   onClick={() => scrollRight(desktopScrollRef)}
@@ -109,7 +112,7 @@ export function ScrollableNavbar() {
                 return (
                   <button
                     key={section}
-                    onClick={() => scrollToSection(section)}
+                    onClick={() => handlerFilter(section)}
                     className={`px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium transition-all duration-200 ${
                       isActive
                         ? 'bg-blue-600 text-white shadow-lg'
