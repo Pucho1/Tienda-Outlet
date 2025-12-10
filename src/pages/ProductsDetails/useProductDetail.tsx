@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import ProductService from "../../service/ProductService";
 import { useLocation, useNavigate } from "react-router";
-// import { Product } from "../../interfaces/product";
 
 const useProductDetail = ( ) => {
 
@@ -14,16 +12,13 @@ const useProductDetail = ( ) => {
 	useEffect(() => {
 		ProductService().getProductById(id)
 			.then((response) => {
-				// const newData = {...response.data, images: response.data.images.map((image: string) => ({ original: image }))};
 				setProductDetail(response.data);
 			})
 			.catch((error) => {
 				console.error("Error fetching productDetail:", error);
 			});
-	}, []);
+	}, [id]);
 
-
-	  
   const navigate = useNavigate();
 
   const goBack = (): void => { navigate(-1) };

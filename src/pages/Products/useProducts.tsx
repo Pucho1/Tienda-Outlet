@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import ProductService from "../../service/ProductService";
-// import normalizedDataResponse from "../../utilities/NormalizedData";
-
 import { Product } from "../../interfaces/product";
+import filtersSelectedStore from "../../store/filtersSelected";
 
 
 const useProducts = () => {
@@ -14,16 +13,16 @@ const useProducts = () => {
 	const [error, setError] = useState<any>(null);
 	const navigate = useNavigate();
 
+	const { filtersSelected } = filtersSelectedStore();
+
 	const goDetail = (product: Product) => {
 		navigate(`/product/${product.id}`, { state: { product } });
 	};
 
-	
 	useEffect(() => {
-		ProductService().getProductsList()
+		ProductService().getProductsListByFilter(filtersSelected?.category.id)
 			.then((response) => {
-				// const mapedResponse = normalizedDataResponse(response.data);
-				console.log("Fetched products:", response.data);
+				console.log("Fetched products filtered:", response.data);
 				setProductList(response.data);
 				setLoading(false);
 			})
@@ -32,9 +31,9 @@ const useProducts = () => {
 				setLoading(false);
 				console.error("Error fetching products:", error);
 			});
-	}, []);
+	}, [filtersSelected]);
 
-  return {goDetail, productList, loading, error};
+  return { goDetail, productList, loading, error };
 };
 
 export default useProducts;

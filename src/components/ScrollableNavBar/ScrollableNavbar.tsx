@@ -1,27 +1,27 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import useScrollableNavBar from './useScrollableNavBar';
-import BTNS_NAMES from '../../store/freezeBtnObject';
 
 export function ScrollableNavbar() {
 
-  const sections  = Object.values(BTNS_NAMES);
-
-  const {activeSection,
+  const {
+    activeSection,
     showLeftArrow,
     showRightArrow,
     desktopScrollRef,
     mobileScrollRef,
-    scrollToSection,
+    handlerOnClickFilter,
     scrollRight,
     scrollLeft,
     handleTouchEnd,
     handleTouchStart,
-  } = useScrollableNavBar({sections});
+    categories,
+  } = useScrollableNavBar();
 
   return (
     <>
       <nav className="top-40 left-0 right-0 bg-white shadow-md z-50">
         <div className="max-w-full">
+            {/* PANTALLAS GRANDES */}
           <div className="flex items-center justify-between px-4 py-3 lg:px-6">
 
             {/* LOGO */}
@@ -34,8 +34,9 @@ export function ScrollableNavbar() {
               </span>
             </div>
 
-            {/*  */}
+            {/* NAVBAR */}
             <div className="hidden lg:flex items-center flex-1 max-w-[55rem] xl:max-w-[65rem] 2xl:max-w-[85rem] mx-4 relative group">
+              {/* flecha derecha */}
               {showLeftArrow && (
                 <button
                   onClick={() => scrollLeft(desktopScrollRef)}
@@ -44,7 +45,7 @@ export function ScrollableNavbar() {
                   <ChevronLeft className="w-5 h-5 text-gray-600 hover:text-blue-600 transition-colors" />
                 </button>
               )}
-
+              {/* NAVBAR-BTN */}
               <div
                 ref={desktopScrollRef}
                 onTouchStart={handleTouchStart}
@@ -52,26 +53,28 @@ export function ScrollableNavbar() {
                 className="flex gap-1 overflow-x-auto scrollbar-hide scroll-smooth px-8 touch-pan-x"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {sections.map((section) => {
-                  const id = section.toLowerCase().replace(/\s+/g, '-');
+                {categories.map((category, index) => {
+                  const id = category.name.toLowerCase().replace(/\s+/g, '-');
                   const isActive = activeSection === id;
 
                   return (
                     <button
-                      key={section}
-                      onClick={() => scrollToSection(section)}
+                      key={index}
+                      id={id}
+                      onClick={() => handlerOnClickFilter(category)}
                       className={`px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium transition-all duration-200 ${
                         isActive
                           ? 'bg-blue-600 text-white shadow-lg'
                           : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
                       }`}
                     >
-                      {section}
+                      {category.name}
                     </button>
                   );
                 })}
               </div>
 
+              {/* Flecha izquierda */}
               {showRightArrow && (
                 <button
                   onClick={() => scrollRight(desktopScrollRef)}
@@ -85,6 +88,7 @@ export function ScrollableNavbar() {
             <div className="hidden lg:block w-24"></div>
           </div>
 
+            {/* PANTALLAS PEQUEÑAS */}
           <div className="lg:hidden px-4 pb-3 relative">
             {showLeftArrow && (
               <button
@@ -102,21 +106,21 @@ export function ScrollableNavbar() {
               className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth px-8 touch-pan-x"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
             >
-              {sections.map((section) => {
-                const id = section.toLowerCase().replace(/\s+/g, '-');
+              {categories.map((category, index) => {
+                const id = category.name.toLowerCase().replace(/\s+/g, '-');
                 const isActive = activeSection === id;
 
                 return (
                   <button
-                    key={section}
-                    onClick={() => scrollToSection(section)}
+                    key={index}
+                    onClick={() => handlerOnClickFilter(category)}
                     className={`px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium transition-all duration-200 ${
                       isActive
                         ? 'bg-blue-600 text-white shadow-lg'
                         : 'text-gray-700 bg-gray-50 hover:bg-gray-100'
                     }`}
                   >
-                    {section}
+                    {category.name}
                   </button>
                 );
               })}
