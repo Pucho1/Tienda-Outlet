@@ -20,7 +20,7 @@ const useProducts = () => {
 	};
 
 	useEffect(() => {
-		ProductService().getProductsListByFilter(filtersSelected?.category || "all")
+		ProductService().getProductsListByFilter(filtersSelected?.category.id)
 			.then((response) => {
 				console.log("Fetched products filtered:", response.data);
 				setProductList(response.data);

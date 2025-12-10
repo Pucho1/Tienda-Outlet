@@ -9,7 +9,7 @@ const ProductService = () => {
     return newAxs.get<Product[]>(`/products/all`);
   };
 
-    const getProductsListByFilter = (category: string): Promise<AxiosResponse<Product[]>> => {
+  const getProductsListByFilter = (category: number | undefined): Promise<AxiosResponse<Product[]>> => {
     return newAxs.get<Product[]>(`/products`, {
       params: { category },
     });

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import ProductService from "../../service/ProductService";
 import { useLocation, useNavigate } from "react-router";
@@ -18,10 +17,8 @@ const useProductDetail = ( ) => {
 			.catch((error) => {
 				console.error("Error fetching productDetail:", error);
 			});
-	}, []);
+	}, [id]);
 
-
-	  
   const navigate = useNavigate();
 
   const goBack = (): void => { navigate(-1) };
