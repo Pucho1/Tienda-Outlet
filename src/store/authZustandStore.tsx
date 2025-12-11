@@ -10,31 +10,31 @@ import { AuthState } from '../interfaces/authState';
  */
 
 export const useAuthStore = create<AuthState>()( 
-    (set) => ({
-      accessToken: null,
-      useReg: null,
-      isAuthenticated:  Boolean(sessionStorage.getItem('refreshToken')),
+  (set) => ({
+    accessToken: null,
+    useReg: null,
+    isAuthenticated:  Boolean(sessionStorage.getItem('refreshToken')),
 
-      setAccessToken: (token) => set( () => {
-        return { accessToken: token }
-      }),
-
-      logout: () => set(() => {
-        sessionStorage.removeItem('refreshToken');
-        return { accessToken: null, useReg: null, isAuthenticated: false };
-      }),
-
-      login: (loginData: LoginResponse) => set(() => {
-        if (loginData.accessToken === null) {
-          return { useReg: null, accessToken: null, isAuthenticated: false };
-        };
-
-        const { accessToken, refreshToken, ...rest } = loginData;
-
-        sessionStorage.setItem('refreshToken', refreshToken);
-
-        return { useReg: rest, accessToken, isAuthenticated: true };
-      }),
-
+    setAccessToken: (token) => set( () => {
+      return { accessToken: token }
     }),
+
+    logout: () => set(() => {
+      sessionStorage.removeItem('refreshToken');
+      return { accessToken: null, useReg: null, isAuthenticated: false };
+    }),
+
+    login: (loginData: LoginResponse) => set(() => {
+      if (loginData.accessToken === null) {
+        return { useReg: null, accessToken: null, isAuthenticated: false };
+      };
+
+      const { accessToken, refreshToken, ...rest } = loginData;
+
+      sessionStorage.setItem('refreshToken', refreshToken);
+
+      return { useReg: rest, accessToken, isAuthenticated: true };
+    }),
+
+  }),
 );

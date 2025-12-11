@@ -7,8 +7,8 @@ import { useAuthStore } from '../store/authZustandStore';
  * * * This instance is used to make requests to the external app API.
  */
 const axs = axios.create({
-  // baseURL: import.meta.env.VITE_EXTERNAL_APP_ax,
-  baseURL: 'https://dummyjson.com/',
+   baseURL: import.meta.env.VITE_BASE_URL,
+  // baseURL: 'https://dummyjson.com/',
   withCredentials: false, // ---> se asegura de que las cookies (como el refreshToken) se envíen en cada request. Es necesario si el refreshToken está en una cookie HTTP-only.
   headers: {
     'Content-Type': 'application/json',

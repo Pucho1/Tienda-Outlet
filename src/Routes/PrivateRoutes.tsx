@@ -2,11 +2,10 @@ import { Navigate, Outlet } from 'react-router';
 import { useAuthStore } from '../store/authZustandStore';
 
 const PrivateRoutes = () => {
-  const isAuntenticated = useAuthStore((state) => state.isAuthenticated);
+  const { isAuthenticated, useReg } = useAuthStore();
   
-  console.log('isAuntenticated', isAuntenticated);
 
-  return isAuntenticated
+  return isAuthenticated
     ? <Outlet />
     : <Navigate to="/products-list" replace />;
 };

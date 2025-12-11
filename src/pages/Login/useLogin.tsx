@@ -7,12 +7,10 @@ import { useAuthStore } from '../../store/authZustandStore';
 const useLogin = () => {
 
 	const navegate = useNavigate();
-  	// const authStore = useAuthStore();
-	// const setAccessToken = useTokenStore((s) => s.setAccessToken);
+  	const { login, setAccessToken } = useAuthStore();
 
 	const authSuccess = ( loginResponse: LoginResponse ) => {
-
-		useAuthStore.getState().login(loginResponse);
+		login(loginResponse);
 		navegate("/products-list");
 	};
 	
@@ -22,11 +20,8 @@ const useLogin = () => {
 		AuthService()
 			.login(email, password)
 			.then(res => {
-				if (res.status !== 200) {
-					throw new Error('Error en la respuesta del servidor');
-				}
 				authSuccess(res.data ?? '');
-				// setAccessToken(res.data.accessToken);
+				setAccessToken(res.data.token);
 			})
 			.catch(err => {
 				console.error('Error:', err.response ? err.response.data : err.message);
