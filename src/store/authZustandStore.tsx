@@ -14,13 +14,14 @@ export const useAuthStore = create<AuthState>()(
     accessToken: null,
     useReg: null,
     isAuthenticated:  Boolean(sessionStorage.getItem('accessToken') ),
+    
 
     setAccessToken: (token) => set( () => {
       return { accessToken: token }
     }),
 
     logout: () => set(() => {
-      sessionStorage.removeItem('refreshToken');
+      sessionStorage.removeItem('accessToken');
       return { accessToken: null, useReg: null, isAuthenticated: false };
     }),
 
