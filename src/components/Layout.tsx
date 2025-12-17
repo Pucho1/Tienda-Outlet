@@ -1,7 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { ScrollableNavbar } from './ScrollableNavBar/ScrollableNavbar';
+import { useAuthStore } from '../context/AuthContext';
 
   const Layout = () => {
+    const isAuntenticated = useAuthStore();
+    
+  console.log('PublicRoute - isAuntenticated:', isAuntenticated);
+
 
   return (
     <>

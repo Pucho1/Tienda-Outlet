@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, LogOut  } from 'lucide-react';
 import useScrollableNavBar from './useScrollableNavBar';
 
 export function ScrollableNavbar() {
@@ -15,6 +15,8 @@ export function ScrollableNavbar() {
     handleTouchEnd,
     handleTouchStart,
     categories,
+    isAuthenticated,
+    handleLogout,
   } = useScrollableNavBar();
 
   return (
@@ -70,6 +72,7 @@ export function ScrollableNavbar() {
                     >
                       {category.name}
                     </button>
+
                   );
                 })}
               </div>
@@ -86,6 +89,16 @@ export function ScrollableNavbar() {
             </div>
 
             <div className="hidden lg:block w-24"></div>
+
+           {isAuthenticated && (
+              <button 
+                onClick={() => handleLogout()}
+                className='flex ml-4 items-center gap-1 cursor-pointer hover:text-red-600 transition-colors'
+              >
+                <p>LogOut</p>
+                <LogOut />
+              </button>
+            )}
           </div>
 
             {/* PANTALLAS PEQUEÑAS */}

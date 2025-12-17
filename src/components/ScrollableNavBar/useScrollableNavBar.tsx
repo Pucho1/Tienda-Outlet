@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router";
 import filtersSelectedStore from "../../store/filtersSelected";
 import useCategoriesStore from "../../store/categoriesStore";
 import { Category } from "../../interfaces/categories";
+import { useAuthStore } from "../../store/authZustandStore";
 
 const useScrollableNavBar = () => {
   const [activeSection, setActiveSection] = useState('');
@@ -14,6 +15,7 @@ const useScrollableNavBar = () => {
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const touchStartRef = useRef<number | null>(null);
 
+  const { isAuthenticated, logout } = useAuthStore();  
   const { categories, getCategories } = useCategoriesStore();
   const { changeFilterSelected } = filtersSelectedStore();
   const location = useLocation();
@@ -56,6 +58,13 @@ const useScrollableNavBar = () => {
 
   const scrollRight = (ref: React.RefObject<HTMLDivElement | null>): void => {
     ref.current?.scrollBy({ left: 200, behavior: 'smooth' });
+  };
+
+  /**
+   * Cierra la sesion del usuario eleimiando el token de sessionStorage y el estado global
+   */
+  const handleLogout = (): void => {
+    logout();
   };
 
   /**
@@ -182,6 +191,8 @@ const useScrollableNavBar = () => {
     handleTouchEnd,
     handleTouchStart,
     categories,
+    isAuthenticated,
+    handleLogout,
   }
 };
 

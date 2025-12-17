@@ -7,7 +7,7 @@ const PublicRoute = () => {
 
   const isAuntenticated = useAuthStore((state) => state.isAuthenticated);
 
-  return !isAuntenticated 
+  return !isAuntenticated
     ? <Outlet />
     : <Navigate to="/products-list" replace />;
 };
