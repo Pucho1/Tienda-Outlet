@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, LogOut  } from 'lucide-react';
+import { ChevronLeft, ChevronRight, LogOut} from 'lucide-react';
 import useScrollableNavBar from './useScrollableNavBar';
 
 export function ScrollableNavbar() {

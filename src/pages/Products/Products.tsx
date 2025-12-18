@@ -6,7 +6,7 @@ import NoProducts from "../../components/errors/NoProducts";
 
 const Products = () => {
 
-	const { goDetail, productList, loading, error } = useProducts();
+	const { productList, loading, error } = useProducts();
  
 	return (
 		<div className="flex flex-col gap-6">
@@ -31,7 +31,6 @@ const Products = () => {
 						<ProductCard
 							key={product.id}
 							product={product}
-							onClick={() => goDetail(product)}
 						/>
 						
 					))

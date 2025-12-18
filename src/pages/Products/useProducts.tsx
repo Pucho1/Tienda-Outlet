@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 
 import ProductService from "../../service/ProductService";
 import { Product } from "../../interfaces/product";
@@ -11,13 +10,10 @@ const useProducts = () => {
 	const [productList, setProductList] = useState<Product[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<any>(null);
-	const navigate = useNavigate();
 
 	const { filtersSelected } = filtersSelectedStore();
 
-	const goDetail = (product: Product) => {
-		navigate(`/product/${product.id}`, { state: { product } });
-	};
+
 
 	useEffect(() => {
 		ProductService().getProductsListByFilter(filtersSelected?.category.id)
@@ -33,7 +29,7 @@ const useProducts = () => {
 			});
 	}, [filtersSelected]);
 
-  return { goDetail, productList, loading, error };
+  return { productList, loading, error };
 };
 
 export default useProducts;

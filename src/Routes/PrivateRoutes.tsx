@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router';
 import { useAuthStore } from '../store/authZustandStore';
 
 const PrivateRoutes = () => {
-  const { isAuthenticated, useReg } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   
 
   return isAuthenticated

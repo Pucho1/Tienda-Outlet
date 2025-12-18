@@ -15,7 +15,7 @@ const useScrollableNavBar = () => {
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const touchStartRef = useRef<number | null>(null);
 
-  const { isAuthenticated, logout } = useAuthStore();  
+  const { isAuthenticated, logout } = useAuthStore();
   const { categories, getCategories } = useCategoriesStore();
   const { changeFilterSelected } = filtersSelectedStore();
   const location = useLocation();
