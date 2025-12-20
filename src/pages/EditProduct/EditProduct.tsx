@@ -169,14 +169,16 @@ const EditProduct = () => {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
-        >
-          Update Product
-        </button>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="group relative w-1/2 flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
+          >
+            Update Product
+          </button>
+        </div>
+        
       </form>
-      <div>{JSON.stringify(productDetail)}</div>
     </>
   );
 };
