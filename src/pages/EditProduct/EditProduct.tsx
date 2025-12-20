@@ -1,76 +1,21 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
-
 import { Barcode, Shirt, X, Cross, ThumbsUp  } from "lucide-react";
 
-import { Product } from "../../interfaces/product";
-import ProductService from "../../service/ProductService";
+import useEditProduct from "./useEditProduct";
 
 const EditProduct = () => {
 
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [images, setImages] = useState<any[]>();
-  const [productDetail, setProductDetail] = useState<Product>();
-  const [imageUrl, setImageUrl] = useState("");
-  const [showImageField, setShowImageField] = useState<boolean>(false);
-
-  const location = useLocation();
-  const id = location.pathname.split("/").pop() || "";
-
-  const handleSubmit = (e: React.FormEvent ) => {
-    e.preventDefault();
-    // Lógica para manejar el envío del formulario de edición de producto
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const removeImage = (index: any) => {
-    setProductDetail((prev) => {
-      if (!prev) return prev;
-      const updatedImages = prev.images.filter((_, i) => i !== index);
-      return { ...prev, images: updatedImages };
-    });
-  };
-
-  const handlerChange = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setProductDetail((prev) => {
-      if (!prev) return prev;
-      const { name, value } = e.target as HTMLInputElement;
-      return { ...prev, [name]: value };
-    })
-  };
-
-  /**
-   * Agrega una nueva imagen al producto.
-   * @returns 
-   */
-  const addImage = () => {
-    if (!imageUrl.trim()) return;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setProductDetail((prev: any) => {
-      if (!prev) return prev;
-
-      return {
-        ...prev,
-        images: [...prev.images, {"original":imageUrl.trim()}],
-      };
-    });
-
-    setImageUrl("");
-  };
-
-	useEffect(() => {
-		ProductService().getProductById(id)
-			.then((response) => {
-				setProductDetail(response.data);
-        setImages(response.data.images);
-			})
-			.catch((error) => {
-				console.error("Error fetching productDetail:", error);
-			});
-	}, [id]);
+  const { 
+    addImage,
+    removeImage,
+    handlerChange,
+    handleSubmit,
+    images,
+    productDetail,
+    imageUrl,
+    setImageUrl,
+    showImageField,
+    setShowImageField,
+  } = useEditProduct();
 
   return (
     <>
@@ -195,37 +140,42 @@ const EditProduct = () => {
             </button>
           </div>
         </div>
-      </form>
+        {/* IMAGENES Y BTN DE AGREGAR */}
+        <div className="flex gap-3 flex-wrap my-6 px-6">
+          {images?.map((img, index) => (
+            <div key={index} className="relative">
+              <img
+                src={img.original}
+                alt={`img-${index}`}
+                className="size-24 object-cover rounded"
+              />
 
-      {/* IMAGENES Y BTN DE AGREGAR */}
-      <div className="flex gap-3 flex-wrap my-6 px-6">
-        {images?.map((img, index) => (
-          <div key={index} className="relative">
-            <img
-              src={img.original}
-              alt={`img-${index}`}
-              className="size-24 object-cover rounded"
-            />
+              <button
+                type="button"
+                className="absolute top-1 right-1"
+                onClick={() => removeImage(index)}
+              >
+                <X className="h-5 w-5 text-black" />
+              </button>
+            </div>
+          ))}
 
-            <button
-              type="button"
-              className="absolute top-1 right-1"
-              onClick={() => removeImage(index)}
-            >
-              <X className="h-5 w-5 text-black" />
+          <div 
+            onClick={() => setShowImageField(!showImageField)}
+            className="size-24 flex items-center justify-center border-2 border-dashed border-gray-300 rounded lg:cursor-pointer">
+            <button className="flex justy">
+              <Cross className="h-10 w-10 text-gray-400 lg:cursor-pointer" />
             </button>
           </div>
-        ))}
-
-        <div 
-          onClick={() => setShowImageField(!showImageField)}
-          className="size-24 flex items-center justify-center border-2 border-dashed border-gray-300 rounded lg:cursor-pointer">
-          <button className="flex justy">
-            <Cross className="h-10 w-10 text-gray-400 lg:cursor-pointer" />
-          </button>
         </div>
-      </div>
 
+        <button
+          type="submit"
+          className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
+        >
+          Update Product
+        </button>
+      </form>
       <div>{JSON.stringify(productDetail)}</div>
     </>
   );
