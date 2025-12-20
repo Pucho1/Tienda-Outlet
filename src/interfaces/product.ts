@@ -15,3 +15,7 @@ export interface ProductListResponse {
     skip    : number;
     limit   : number;
 };
+
+export interface ProductCardProps {
+  product: Product;
+}

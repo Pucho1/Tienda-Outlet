@@ -15,11 +15,16 @@ const ProductService = () => {
     });
   };
 
-   const getProductById = (id: string): Promise<AxiosResponse<Product>> => {
+  const getProductById = (id: string): Promise<AxiosResponse<Product>> => {
     return newAxs.get<Product>(`/products/${id}`);
   };
 
-  return { getProductsList, getProductById, getProductsListByFilter };
+  const EditProductById = (id: string, product: Product) => {
+    const newProduct = { ...product, price: Number(product.price), quantity: Number(product.quantity) };
+    return newAxs.patch<Product>(`/products/update/${id}`, newProduct);
+  };
+
+  return { getProductsList, getProductById, getProductsListByFilter, EditProductById };
 };
 
 export default ProductService;

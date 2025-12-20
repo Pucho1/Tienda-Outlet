@@ -10,31 +10,40 @@ import { AuthState } from '../interfaces/authState';
  */
 
 export const useAuthStore = create<AuthState>()( 
-    (set) => ({
-      accessToken: null,
-      useReg: null,
-      isAuthenticated:  Boolean(sessionStorage.getItem('refreshToken')),
+  (set) => ({
+    accessToken: null,
+    useReg: null,
+    isAuthenticated:  Boolean(sessionStorage.getItem('accessToken') ),
+    
 
-      setAccessToken: (token) => set( () => {
-        return { accessToken: token }
-      }),
-
-      logout: () => set(() => {
-        sessionStorage.removeItem('refreshToken');
-        return { accessToken: null, useReg: null, isAuthenticated: false };
-      }),
-
-      login: (loginData: LoginResponse) => set(() => {
-        if (loginData.accessToken === null) {
-          return { useReg: null, accessToken: null, isAuthenticated: false };
-        };
-
-        const { accessToken, refreshToken, ...rest } = loginData;
-
-        sessionStorage.setItem('refreshToken', refreshToken);
-
-        return { useReg: rest, accessToken, isAuthenticated: true };
-      }),
-
+    setAccessToken: (token) => set( () => {
+      return { accessToken: token }
     }),
+
+    logout: () => set(() => {
+      sessionStorage.removeItem('accessToken');
+      return { accessToken: null, useReg: null, isAuthenticated: false };
+    }),
+
+    login: (loginData: LoginResponse) => set(() => {
+
+      console.log('loginData en store:', loginData);
+
+      if (loginData.accessToken === null) {
+        return { useReg: null, accessToken: null, isAuthenticated: false };
+      };
+
+      const { accessToken, ...rest } = loginData;
+
+      // if (!accessToken || !refreshToken) {
+      //   sessionStorage.setItem('refreshToken', refreshToken);
+      // }
+      if ( accessToken ) {
+        sessionStorage.setItem('accessToken', accessToken);
+      }
+
+
+      return { useReg: rest, accessToken, isAuthenticated: true };
+    }),
+  }),
 );

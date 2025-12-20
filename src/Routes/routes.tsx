@@ -39,6 +39,14 @@ export const router = createBrowserRouter([
               return { Component: UserPage };
             },
           },
+          {
+            path: "/editProduct/:id",
+            lazy: async () => {
+              const { default: EditProduct } = await import("../pages/EditProduct/EditProduct");
+              return { Component: EditProduct };
+            },
+          },
+
         ]
       },
     ],
