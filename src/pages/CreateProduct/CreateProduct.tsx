@@ -1,5 +1,6 @@
 import { Barcode, Cross, Shield, ThumbsUp, X } from "lucide-react";
 import useCreateProduct from "./useEditCreateProduct";
+import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
 
 const CreateProduct = () => {
 
@@ -21,6 +22,9 @@ const CreateProduct = () => {
     <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
         <div className="space-y-4">
           {/* NOMBRE */}
+
+          <GoBackBtn />
+          
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               ID

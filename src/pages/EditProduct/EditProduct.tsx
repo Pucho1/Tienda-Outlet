@@ -1,6 +1,7 @@
 import { Barcode, Shirt, X, Cross, ThumbsUp  } from "lucide-react";
 
 import useEditProduct from "./useEditProduct";
+import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
 
 const EditProduct = () => {
 
@@ -19,6 +20,9 @@ const EditProduct = () => {
 
   return (
     <>
+
+      <GoBackBtn />
+      
       <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
         <div className="space-y-4">
           {/* NOMBRE */}

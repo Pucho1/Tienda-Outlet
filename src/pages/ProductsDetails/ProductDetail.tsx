@@ -1,11 +1,12 @@
-import { ArrowLeft, Package } from 'lucide-react';
+import { Package } from 'lucide-react';
 
 import useProductDetail from './useProductDetail';
 import Swipper from '../../components/swipper/Swipper';
+import GoBackBtn from '../../components/goBackBtn/GoBackBtn';
 
 const ProductDetail = () => {
 
-  const { productDetail, goBack } = useProductDetail();
+  const { productDetail } = useProductDetail();
 
 
   if (!productDetail) {
@@ -17,13 +18,7 @@ const ProductDetail = () => {
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg">
 
-      {/* GO BACK BTN*/}
-      <button
-        onClick={goBack}
-        className="flex px-6 items-center text-blue-600 hover:text-blue-800 mb-6"
-      >
-        <ArrowLeft className="mr-2 h-5 w-5" />
-      </button>
+      <GoBackBtn />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 

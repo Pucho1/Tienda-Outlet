@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductService from "../../service/ProductService";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 const useProductDetail = ( ) => {
 
@@ -19,11 +19,8 @@ const useProductDetail = ( ) => {
 			});
 	}, [id]);
 
-  const navigate = useNavigate();
 
-  const goBack = (): void => { navigate(-1) };
-
-  return { productDetail, goBack };
+  return { productDetail };
 };
 
 export default useProductDetail;
