@@ -16,12 +16,10 @@ const useProductCard = () => {
   const oferta = true;
 
   const goDetail = (product: Product) => {
-		console.log("ver producto");
 		navigate(`/product/${product.id}`, { state: { product } });
 	};
 
   const goEditPage = (product: Product) => {
-		console.log("Editar producto");
     navigate(`/editProduct/${product.id}`, { state: { product } });
   };
 

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import ProductService from "../../service/ProductService";
 import { Product } from "../../interfaces/product";
 import filtersSelectedStore from "../../store/filtersSelected";
+import { useAuthStore } from "../../store/authZustandStore";
+import { useNavigate } from "react-router";
 
 
 const useProducts = () => {
@@ -11,9 +13,12 @@ const useProducts = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<any>(null);
 
+  	const navigate = useNavigate();
+
+
 	const { filtersSelected } = filtersSelectedStore();
 
-
+	const { isAuthenticated } = useAuthStore();
 
 	useEffect(() => {
 		ProductService().getProductsListByFilter(filtersSelected?.category.id)
@@ -29,7 +34,11 @@ const useProducts = () => {
 			});
 	}, [filtersSelected]);
 
-  return { productList, loading, error };
+	const goToCreate = () => {
+    	navigate(`/createProduct`);
+	};
+
+  return { productList, loading, error, goToCreate, isAuthenticated };
 };
 
 export default useProducts;

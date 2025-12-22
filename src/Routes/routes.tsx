@@ -47,6 +47,13 @@ export const router = createBrowserRouter([
             },
           },
 
+          {
+            path: "/createProduct",
+            lazy: async () => {
+              const { default: CreateProduct } = await import("../pages/CreateProduct/CreateProduct");
+              return { Component: CreateProduct };
+            },
+          },
         ]
       },
     ],
