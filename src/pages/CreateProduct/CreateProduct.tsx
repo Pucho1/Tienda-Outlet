@@ -1,11 +1,10 @@
-import { Barcode, Shirt, X, Cross, ThumbsUp  } from "lucide-react";
-
-import useEditProduct from "./useEditProduct";
+import { Barcode, Cross, Shield, ThumbsUp, X } from "lucide-react";
+import useCreateProduct from "./useEditCreateProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
 
-const EditProduct = () => {
+const CreateProduct = () => {
 
-  const { 
+      const { 
     addImage,
     removeImage,
     handlerChange,
@@ -16,16 +15,16 @@ const EditProduct = () => {
     setImageUrl,
     showImageField,
     setShowImageField,
-  } = useEditProduct();
+  } = useCreateProduct();
+
 
   return (
-    <>
-
-      <GoBackBtn />
-      
-      <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
+    <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
         <div className="space-y-4">
           {/* NOMBRE */}
+
+          <GoBackBtn />
+          
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               ID
@@ -57,7 +56,7 @@ const EditProduct = () => {
             {/* NAME */}
             <div className="mt-1 relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Shirt className="h-5 w-5 text-gray-400" />
+                <Shield className="h-5 w-5 text-gray-400" />
               </div>
 
               <input
@@ -178,13 +177,12 @@ const EditProduct = () => {
             type="submit"
             className="group relative w-1/2 flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
           >
-            Update Product
+            Adicionar Producto
           </button>
         </div>
         
       </form>
-    </>
-  );
-};
+  )
+}
 
-export default EditProduct;
+export default CreateProduct;
