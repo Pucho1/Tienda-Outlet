@@ -181,7 +181,6 @@ const EditProduct = () => {
             Update Product
           </button>
         </div>
-        
       </form>
     </>
   );
