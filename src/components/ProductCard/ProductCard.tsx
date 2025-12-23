@@ -1,4 +1,4 @@
-import { Pencil } from 'lucide-react';
+import { Pencil, Trash } from 'lucide-react';
 
 import Swipper from '../swipper/Swipper';
 import useProductCard from './useProductCard';
@@ -11,64 +11,81 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const { calcularDescuento, oferta, isAuthenticated, goDetail, goEditPage } = useProductCard();
 
   return (
-    <div
-      className="rounded-lg overflow-hidden md:cursor-pointer transform transition-transform hover:scale-105 relative"
+
+    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative flex flex-col">
       
-    >
       {/* IMAGES */}
       <div 
         onClick={() => goDetail(product)}
-        className="w-full object-contain object-center"
+        className="relative aspect-square bg-gray-50 cursor-pointer w-full object-contain object-center"
       >
         <Swipper images={product.images}/>
-      </div>
-     {/* OFERTA */}
-     {oferta && (
-        <div className="flex items-center bg-red-500 absolute z-10 bottom-34 sm:bottom-35 left-[6%] sm:left-[5%] w-15 pl-2 h-6 custom-banner-offer">
-          <p className='text-sm text-white font-semibold'>Oferta</p>
-        </div>
-      )}
+        
+        {/* OFERTA BADGE - Modern floating style */}
+        {oferta && (
+          <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg z-10">
+            Oferta
+          </div>
+        )}
 
-   
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
+      </div>
 
       {/* INFO */}
-      <div className="p-4 sm:p-5 md:p-4 flex-col flex justify-between info-card">
-
+      <div className="p-5 flex flex-col flex-grow">
+        
         {/* NAME */}
-        <h3 className="font-bold text-gray-800 multiline-ellipsis">{product.name}</h3>
+        <h3 
+          onClick={() => goDetail(product)}
+          className="font-semibold text-gray-900 text-lg leading-tight line-clamp-2 min-h-[3.5rem] cursor-pointer hover:text-gray-700 transition-colors"
+        >
+          {product.name}
+        </h3>
 
         {/* DESCRIPTION */}
-        <p className="text-sm text-gray-600 mt-1 w-full truncate">{product.description}</p>
+        <p className="text-sm text-gray-500 mt-2 line-clamp-2 leading-relaxed">
+          {product.description}
+        </p>
 
         {/* PRICES */}
-        <div className="mt-4 flex">
-
-          <p className="hidden text-lg font-bold proportional-nums">
-            ${calcularDescuento(product.price).aumento }
-          </p>
-
-          <p className="font-bold proportional-nums">
+        <div className="mt-auto pt-4 flex items-baseline gap-2">
+          {oferta && (
+            <p className="text-lg text-gray-400 line-through font-medium">
+              ${calcularDescuento(product.price).aumento}
+            </p>
+          )}
+          
+          <p className="text-2xl font-bold text-gray-900 tabular-nums">
             ${product.price}
           </p>
-
-          <div className="block w-24"></div>
-
-          {/* EDIT BUTTON */}
-          {isAuthenticated && (
-            <button 
-              onClick={ (e) => {
-                e.stopPropagation();
-                goEditPage(product)
-              }}
-              className="flex justify-center items-center w-15 bg-white shadow-md hover:bg-gray-100 transition-colors md:cursor-pointer"
-            >
-              <Pencil />
-            </button>
-          )}
         </div>
 
-        
-
+        {/* ACTION BUTTONS */}
+        {isAuthenticated && (
+          <div className="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goEditPage(product);
+              }}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 rounded-lg transition-all duration-200 font-medium text-sm group/btn"
+            >
+              <Pencil className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+              <span>Editar</span>
+            </button>
+            
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                // goDeletePage(product)
+              }}
+              className="flex items-center justify-center px-4 py-2.5 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 rounded-lg transition-all duration-200 group/btn"
+            >
+              <Trash className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
