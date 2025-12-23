@@ -51,12 +51,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         {/* PRICES */}
         <div className="mt-auto pt-4 flex items-baseline gap-2">
           {oferta && (
-            <p className="text-lg text-gray-400 line-through font-medium">
+            <p className="increase_text text-gray-400 line-through font-medium">
               ${calcularDescuento(product.price).aumento}
             </p>
           )}
           
-          <p className="text-2xl font-bold text-gray-900 tabular-nums">
+          <p className="increase_text2 font-bold text-gray-900 tabular-nums">
             ${product.price}
           </p>
         </div>
@@ -69,7 +69,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                 e.stopPropagation();
                 goEditPage(product);
               }}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 rounded-lg transition-all duration-200 font-medium text-sm group/btn"
+              className="flex-1 flex items-center justify-center gap-2 px-2 md:px-4 py-2.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 rounded-lg transition-all duration-200 font-medium text-sm group/btn"
             >
               <Pencil className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
               <span>Editar</span>

@@ -1,11 +1,8 @@
 
-	@media (540px <= width < 640px) {
-		.info-card{
-			padding-inline: 35px;
-		}
+.increase_text {
+    font-size: clamp(0.7rem, 4vw, 1.2rem);
+}
 
-		.custom-banner-offer{
-			left: 15%;
-		}
-
+.increase_text2 {
+    font-size: clamp(0.8rem, 5vw, 1.4rem);
 }
