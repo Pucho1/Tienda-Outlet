@@ -1,10 +1,11 @@
 import { Barcode, Cross, Shield, ThumbsUp, X } from "lucide-react";
+
 import useCreateProduct from "./useEditCreateProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
 
 const CreateProduct = () => {
 
-      const { 
+  const { 
     addImage,
     removeImage,
     handlerChange,
@@ -19,12 +20,12 @@ const CreateProduct = () => {
 
 
   return (
-    <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
-        <div className="space-y-4">
-          {/* NOMBRE */}
+    <>
+      <GoBackBtn />
+      <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
 
-          <GoBackBtn />
-          
+        <div className="space-y-4">
+          {/* NOMBRE */}          
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               ID
@@ -182,7 +183,8 @@ const CreateProduct = () => {
         </div>
         
       </form>
-  )
-}
+    </>
+  );
+};
 
 export default CreateProduct;
