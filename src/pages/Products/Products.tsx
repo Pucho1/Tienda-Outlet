@@ -7,18 +7,18 @@ import { Cross } from "lucide-react";
 
 const Products = () => {
 
-	const { productList, loading, error, goToCreate, isAuthenticated } = useProducts();
+	const { productList, loading, error, goToCreate, isAuthenticated, deleteProduct } = useProducts();
  
 	return (
 		<div className="flex flex-col gap-6">
-			{ error ?	
-			<div className="col-span-full" />
+			{error ?
+				<div className="col-span-full" />
 			:
-			<div className="flex flex-col">
-				<div className="flex items-center justify-center mb-5 h-1/7">
-					<TitleBig />
+				<div className="flex flex-col">
+					<div className="flex items-center justify-center mb-5 h-1/7">
+						<TitleBig />
+					</div>
 				</div>
-			</div>
 			}
 			{ isAuthenticated && <div className="flex justify-end">
 				<div
@@ -32,7 +32,7 @@ const Products = () => {
 			</div>}
 			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  xl:grid-cols-5 gap-6 p-4">
 
-				{ loading ?   
+				{ loading ?
 					[...Array(10)].map((_, index) => <Skeleton key={index} /> )
 				 :
 				  error ?
@@ -42,6 +42,7 @@ const Products = () => {
 						<ProductCard
 							key={product.id}
 							product={product}
+							deleteProduct={deleteProduct}
 						/>
 					))
 				}

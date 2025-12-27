@@ -3,21 +3,27 @@ import { useLocation } from "react-router";
 
 import ProductService from "../../service/ProductService";
 import { Product } from "../../interfaces/product";
+import useMapers from "../../utilities/useMapers";
 
 const useEditProduct = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [images, setImages] = useState<any[]>();
-  const [productDetail, setProductDetail] = useState<Product>();
-  const [imageUrl, setImageUrl] = useState("");
-  const [showImageField, setShowImageField] = useState<boolean>(false);
+  const [images, setImages]                  = useState<any[]>();
+  const [productDetail, setProductDetail]    = useState<Product>();
+  const [imageUrl, setImageUrl]              = useState("");
+  const [showImageField, setShowImageField]  = useState<boolean>(false);
 
-  const location = useLocation();
-  const id = location.pathname.split("/").pop() || "";
+  const location             = useLocation();
+  const id                   = location.pathname.split("/").pop() || "";
+  const { mapDataToProduct } = useMapers();
+
 
   const handleSubmit = (e: React.FormEvent ) => {
     e.preventDefault();
-    ProductService().EditProductById(id, productDetail as Product)
+
+    const newProductDetails = mapDataToProduct(productDetail as Product);
+
+    ProductService().EditProductById(id, newProductDetails as Product)
       .then((response) => {
         console.log("Product updated successfully:", response.data);
       })

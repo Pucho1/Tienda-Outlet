@@ -1,6 +1,6 @@
 import { Barcode, Cross, Shield, ThumbsUp, X } from "lucide-react";
 
-import useCreateProduct from "./useEditCreateProduct";
+import useCreateProduct from "./useCreateProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
 
 const CreateProduct = () => {
@@ -11,11 +11,12 @@ const CreateProduct = () => {
     handlerChange,
     handleSubmit,
     images,
-    productDetail,
+    productData,
     imageUrl,
     setImageUrl,
     showImageField,
     setShowImageField,
+    categories,
   } = useCreateProduct();
 
 
@@ -25,7 +26,7 @@ const CreateProduct = () => {
       <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
 
         <div className="space-y-4">
-          {/* NOMBRE */}          
+          {/* ID */}          
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               ID
@@ -40,8 +41,8 @@ const CreateProduct = () => {
                 id="id"
                 name="id"
                 autoComplete="id"
-                required
-                value={productDetail?.id || ""}
+                disabled
+                value={productData?.id || ""}
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="01"
               />
@@ -65,7 +66,7 @@ const CreateProduct = () => {
                 name="name"
                 autoComplete="name"
                 required
-                value={productDetail?.name || ""}
+                value={productData?.name || ""}
                 onChange={(e) => handlerChange(e)}
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder=""
@@ -85,7 +86,7 @@ const CreateProduct = () => {
                 id="description"
                 name="description"
                 autoComplete="description"
-                value={productDetail?.description || ""}
+                value={productData?.description || ""}
                 onChange={(e) => handlerChange(e)}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder=""
@@ -93,24 +94,73 @@ const CreateProduct = () => {
             </div>
           </div>
 
+          {/* PRICE */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Price
+            </label>
+
+            {/* PRICE */}
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Shield className="h-5 w-5 text-gray-400" />
+              </div>
+
+              <input
+                id="price"
+                name="price"
+                autoComplete="price"
+                type="number"
+                required
+                value={productData?.price || ""}
+                onChange={(e) => handlerChange(e)}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+
+          {/* CATEGORIA */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Categoria
+            </label>
+
+            {/* CATEGORIA */}
+            <div className="mt-1 relative">
+              <select
+                id="category"
+                required
+                name="category"
+                onChange={(e) => handlerChange(e)}
+                className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              >
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+
           {/* CANTIDAD */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Cantidad
             </label>
 
-            {/* NAME */}
+            {/* CANTIDAD */}
             <div className="mt-1 relative">
-
               <input
                 id="quantity"
                 name="quantity"
                 autoComplete="quantity"
                 type="number"
-                value={productDetail?.quantity || ""}
+                required
+                value={productData?.quantity || ""}
                 onChange={(e) => handlerChange(e)}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="0"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder=""
               />
             </div>
           </div>
@@ -144,6 +194,7 @@ const CreateProduct = () => {
             </button>
           </div>
         </div>
+
         {/* IMAGENES Y BTN DE AGREGAR */}
         <div className="flex gap-3 flex-wrap my-6 px-6">
           {images?.map((img, index) => (
@@ -181,7 +232,6 @@ const CreateProduct = () => {
             Adicionar Producto
           </button>
         </div>
-        
       </form>
     </>
   );
