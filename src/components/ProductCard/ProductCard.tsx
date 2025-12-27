@@ -6,7 +6,7 @@ import { ProductCardProps } from '../../interfaces/product';
 
 import './pruductCard.css';
 
-export const ProductCard = ({ deleteProduct, ...product }: ProductCardProps) => {
+export const ProductCard = ({ deleteProduct, product }: ProductCardProps) => {
   
   const { calcularDescuento, oferta, isAuthenticated, goDetail, goEditPage } = useProductCard();
 

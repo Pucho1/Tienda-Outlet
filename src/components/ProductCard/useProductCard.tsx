@@ -7,8 +7,8 @@ const useProductCard = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
   
-  const calcularDescuento = (price: number): {aumento:number, porcent: number} => {
-    const aumento = price + 10;
+  const calcularDescuento = (price?: number): {aumento:number, porcent: number} => {
+    const aumento = price ? price + 10 : 0;
     const porcent = 0;
     return {aumento , porcent};
   }
