@@ -10,35 +10,47 @@ import { useNavigate } from "react-router";
 
 const useProducts = () => {
 	const [productList, setProductList] = useState<Product[]>([]);
-	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<any>(null);
+	const [loading, setLoading] 		= useState<boolean>(true);
+	const [error, setError] 			= useState<any>(null);
 
-  	const navigate = useNavigate();
-
-
+  	const navigate 			  = useNavigate();
 	const { filtersSelected } = filtersSelectedStore();
-
 	const { isAuthenticated } = useAuthStore();
 
-	useEffect(() => {
+	const getProductsList = (): void => {
 		ProductService().getProductsListByFilter(filtersSelected?.category.id)
 			.then((response) => {
-				console.log("Fetched products filtered:", response.data);
 				setProductList(response.data);
 				setLoading(false);
 			})
 			.catch((error) => {
 				setError(error);
 				setLoading(false);
-				console.error("Error fetching products:", error);
 			});
+	};
+
+	useEffect(() => {
+		getProductsList();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filtersSelected]);
+
+	const deleteProduct = (id: number) => {
+		ProductService().deleteProductById(id)
+		.then((resp) => {
+			if( resp.status === 200 ) {
+				getProductsList();
+			}
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+	};
 
 	const goToCreate = () => {
     	navigate(`/createProduct`);
 	};
 
-  return { productList, loading, error, goToCreate, isAuthenticated };
+  return { productList, loading, error, goToCreate, isAuthenticated, deleteProduct };
 };
 
 export default useProducts;

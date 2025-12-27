@@ -4,9 +4,9 @@ import Swipper from '../swipper/Swipper';
 import useProductCard from './useProductCard';
 import { ProductCardProps } from '../../interfaces/product';
 
-import './pruductCard.css'
+import './pruductCard.css';
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, deleteProduct }: ProductCardProps) => {
   
   const { calcularDescuento, oferta, isAuthenticated, goDetail, goEditPage } = useProductCard();
 
@@ -78,7 +78,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                // goDeletePage(product)
+                deleteProduct(product.id)
               }}
               className="flex items-center justify-center px-4 py-2.5 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 rounded-lg transition-all duration-200 group/btn"
             >

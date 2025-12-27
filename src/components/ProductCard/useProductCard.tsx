@@ -23,7 +23,9 @@ const useProductCard = () => {
     navigate(`/editProduct/${product.id}`, { state: { product } });
   };
 
-  return { calcularDescuento, oferta, isAuthenticated, goDetail, goEditPage};
+ 
+
+  return { calcularDescuento, oferta, isAuthenticated, goDetail, goEditPage };
 };
 
 export default useProductCard;

@@ -1,12 +1,12 @@
 export interface Product {
     id	       : number,
-    name       : string,
-    price      : number,
-    description: string,
-    category   : string,
+    name       : string | undefined,
+    price      : number | undefined,
+    description: string | undefined,
+    category   : string | number | undefined,
     images     : { original: string }[],
-    quantity?  : number;
-    brand      : string;
+    quantity?  : number | undefined;
+    brand      : string | undefined;
 };
 
 export interface ProductListResponse {
@@ -18,4 +18,5 @@ export interface ProductListResponse {
 
 export interface ProductCardProps {
   product: Product;
+  deleteProduct: ((id: number) => void)
 }

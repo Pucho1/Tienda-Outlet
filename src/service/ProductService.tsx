@@ -20,11 +20,18 @@ const ProductService = () => {
   };
 
   const EditProductById = (id: string, product: Product) => {
-    const newProduct = { ...product, price: Number(product.price), quantity: Number(product.quantity) };
-    return newAxs.patch<Product>(`/products/update/${id}`, newProduct);
+    return newAxs.patch<Product>(`/products/update/${id}`, product);
   };
 
-  return { getProductsList, getProductById, getProductsListByFilter, EditProductById };
+  const deleteProductById = (id : number): Promise<AxiosResponse<boolean>> => {
+    return newAxs.delete<boolean>(`/products/delete/${id}`);
+  };
+
+  const createProduct = (product: Product): Promise<AxiosResponse<boolean>> => {
+    return newAxs.post<boolean>(`/products/create`, product);
+  };
+
+  return { getProductsList, getProductById, getProductsListByFilter, EditProductById, deleteProductById, createProduct };
 };
 
 export default ProductService;

@@ -20,7 +20,6 @@ const EditProduct = () => {
 
   return (
     <>
-
       <GoBackBtn />
       
       <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
@@ -40,10 +39,10 @@ const EditProduct = () => {
                 id="id"
                 name="id"
                 autoComplete="id"
+                disabled
                 required
                 value={productDetail?.id || ""}
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="01"
               />
             </div>
           </div>
@@ -64,6 +63,7 @@ const EditProduct = () => {
                 id="name"
                 name="name"
                 autoComplete="name"
+                type="string"
                 required
                 value={productDetail?.name || ""}
                 onChange={(e) => handlerChange(e)}
@@ -144,6 +144,7 @@ const EditProduct = () => {
             </button>
           </div>
         </div>
+
         {/* IMAGENES Y BTN DE AGREGAR */}
         <div className="flex gap-3 flex-wrap my-6 px-6">
           {images?.map((img, index) => (
