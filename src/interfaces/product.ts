@@ -16,7 +16,7 @@ export interface ProductListResponse {
     limit   : number;
 };
 
-export interface ProductCardProps {
-  product: Product;
+export interface ProductCardProps extends Product {
+  price : number
   deleteProduct: ((id: number) => void)
 }
