@@ -1,4 +1,4 @@
-import { Barcode, Cross, Shield, ThumbsUp, X } from "lucide-react";
+import { Cross, Shield, ThumbsUp, X } from "lucide-react";
 
 import useCreateProduct from "./useCreateProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
@@ -10,7 +10,6 @@ const CreateProduct = () => {
     removeImage,
     handlerChange,
     handleSubmit,
-    images,
     productData,
     imageUrl,
     setImageUrl,
@@ -26,29 +25,7 @@ const CreateProduct = () => {
       <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
 
         <div className="space-y-4">
-          {/* ID */}          
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              ID
-            </label>
 
-            {/* ID */}
-            <div className="mt-1 relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Barcode className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                id="id"
-                name="id"
-                autoComplete="id"
-                disabled
-                value={productData?.id || ""}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="01"
-              />
-            </div>
-          </div>
-          
           {/* NAME */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -197,7 +174,7 @@ const CreateProduct = () => {
 
         {/* IMAGENES Y BTN DE AGREGAR */}
         <div className="flex gap-3 flex-wrap my-6 px-6">
-          {images?.map((img, index) => (
+          {productData?.images?.map((img, index) => (
             <div key={index} className="relative">
               <img
                 src={img.original}

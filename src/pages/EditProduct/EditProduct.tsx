@@ -24,7 +24,7 @@ const EditProduct = () => {
       
       <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
         <div className="space-y-4">
-                
+
           {/* NAME */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">

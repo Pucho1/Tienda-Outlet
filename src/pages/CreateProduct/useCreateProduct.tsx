@@ -9,8 +9,6 @@ import useMapers from "../../utilities/useMapers";
 
 const useCreateProduct = () => {
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [images, setImages]                 = useState<any[]>();
   const [productData, setProductData]       = useState<Product>();
   const [imageUrl, setImageUrl]             = useState("");
   const [showImageField, setShowImageField] = useState<boolean>(false);
@@ -108,8 +106,6 @@ const useCreateProduct = () => {
     removeImage,
     handlerChange,
     handleSubmit,
-    images,
-    setImages,
     productData,
     setProductData,
     imageUrl,
