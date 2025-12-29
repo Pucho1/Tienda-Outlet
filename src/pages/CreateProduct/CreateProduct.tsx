@@ -216,7 +216,11 @@ const CreateProduct = () => {
           ))}
 
           <div 
-            onClick={() => setShowImageField(!showImageField)}
+            onClick={(e) =>{ 
+              e.preventDefault();
+              e.stopPropagation();
+              return setShowImageField(!showImageField)
+            }}
             className="size-24 flex items-center justify-center border-2 border-dashed border-gray-300 rounded lg:cursor-pointer">
             <button className="flex justy">
               <Cross className="h-10 w-10 text-gray-400 lg:cursor-pointer" />

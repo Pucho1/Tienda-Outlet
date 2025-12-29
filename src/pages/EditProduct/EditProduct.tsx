@@ -1,11 +1,11 @@
-import { Barcode, Shirt, X, Cross, ThumbsUp  } from "lucide-react";
+import { Barcode, Shirt, X, Cross, ThumbsUp, Euro  } from "lucide-react";
 
 import useEditProduct from "./useEditProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
 
 const EditProduct = () => {
 
-  const { 
+  const {
     addImage,
     removeImage,
     handlerChange,
@@ -16,6 +16,7 @@ const EditProduct = () => {
     setImageUrl,
     showImageField,
     setShowImageField,
+    categories,
   } = useEditProduct();
 
   return (
@@ -112,6 +113,55 @@ const EditProduct = () => {
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="0"
               />
+            </div>
+          </div>
+
+           {/* PRICE */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Price
+            </label>
+
+            {/* PRICE */}
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Euro className="h-4 w-4 text-gray-400" />
+              </div>
+
+              <input
+                id="price"
+                name="price"
+                autoComplete="price"
+                type="number"
+                required
+                value={productDetail?.price || ""}
+                onChange={(e) => handlerChange(e)}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+
+           {/* CATEGORIA */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Categoria
+            </label>
+
+            {/* CATEGORIA */}
+            <div className="mt-1 relative">
+              <select
+                id="category"
+                required
+                name="category"
+                value={productDetail?.category}
+                onChange={(e) => handlerChange(e)}
+                className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              >
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))}
+              </select>
             </div>
           </div>
 

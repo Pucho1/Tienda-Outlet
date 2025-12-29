@@ -81,11 +81,18 @@ const useCreateProduct = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setProductData((prev: any) => {
 
-      if (!prev || !prev.images) {
+      if (!prev) {
         return { 
           images: [ {"original":imageUrl.trim()}]
         };
       };
+
+      if (!prev.images) {
+        return { 
+          ...prev,
+          images: [ {"original":imageUrl.trim()}]
+        };
+      }
 
       return {
         ...prev,

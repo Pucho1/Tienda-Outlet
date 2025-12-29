@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import ProductService from "../../service/ProductService";
 import { Product } from "../../interfaces/product";
 import useMapers from "../../utilities/useMapers";
+import useCategoriesStore from "../../store/categoriesStore";
 
 const useEditProduct = () => {
 
@@ -16,6 +17,7 @@ const useEditProduct = () => {
   const location             = useLocation();
   const id                   = location.pathname.split("/").pop() || "";
   const { mapDataToProduct } = useMapers();
+  const { categories }       = useCategoriesStore();
 
 
   const handleSubmit = (e: React.FormEvent ) => {
@@ -95,6 +97,7 @@ const useEditProduct = () => {
     setImageUrl,
     showImageField,
     setShowImageField,
+    categories,
   };
 };
 
