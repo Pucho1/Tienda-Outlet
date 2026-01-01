@@ -11,7 +11,6 @@ const useEditProduct = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [images, setImages]                  = useState<any[]>();
-  const [productDetail, setProductDetail]    = useState<Product>();
   const [imageUrl, setImageUrl]              = useState("");
   const [showImageField, setShowImageField]  = useState<boolean>(false);
 
@@ -19,7 +18,7 @@ const useEditProduct = () => {
   const id                   = location.pathname.split("/").pop() || "";
   const { mapDataToProduct } = useMapers();
   const { categories }       = useCategoriesStore();
-  const { register, handleSubmit, watch, formState: { errors }, reset, setValue } = useForm();
+  const { register, handleSubmit, watch, formState: { errors, isDirty }, reset, setValue } = useForm();
 
   /**
    * Se encarga de enviar la solicitud para actualizar el producto.
@@ -45,20 +44,6 @@ const useEditProduct = () => {
   };
 
   /**
-   * Actualiza el estado del producto con el valor del input modificado.
-   * @param e evento del input que llama al handler
-   */
-  const handlerChange = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setProductDetail((prev) => {
-      if (!prev) return prev;
-      const { name, value } = e.target as HTMLInputElement;
-      return { ...prev, [name]: value };
-    })
-  };
-
-  /**
    * Agrega una nueva imagen al producto y la previsualiza en la lista de imagenes.
    * @returns
    */
@@ -71,7 +56,7 @@ const useEditProduct = () => {
 	useEffect(() => {
 		ProductService().getProductById(id)
 			.then((response) => {
-				setProductDetail(response.data);
+				// setProductDetail(response.data);
         setImages(response.data.images);
         reset(response.data);
 			})
@@ -84,15 +69,12 @@ const useEditProduct = () => {
     e.preventDefault();
   };
   
-  return { 
+  return {
     addImage,
     removeImage,
-    handlerChange,
     handleSubmit,
     images,
     setImages,
-    productDetail,
-    setProductDetail,
     imageUrl,
     setImageUrl,
     showImageField,
@@ -103,6 +85,7 @@ const useEditProduct = () => {
     errors,
     watch,
     onSubmit,
+    isDirty,
   };
 };
 

@@ -19,6 +19,7 @@ const EditProduct = () => {
     errors,
     onSubmit,
     watch,
+    isDirty,
   } = useEditProduct();
 
   return (
@@ -46,10 +47,21 @@ const EditProduct = () => {
               <input
                 id="name"
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                {...register("name", { required: true } )}
+               {...register("name", 
+                  { 
+                    required: {
+                      value: true,
+                      message: "Este campo es requerido"
+                    }, 
+                    minLength: {
+                      value: 2,
+                      message: "el nombre debe tener al menos 2 caracteres"
+                    }
+                  }
+                )}
               />
             </div>
-              {errors.name && <p className="perror pt-2">Requerido</p>}
+              {errors.name && <p className="pt-1 text-red-500">{errors.name.message as string}</p>}
           </div>
 
           {/* DESCRIPCION */}
@@ -62,10 +74,24 @@ const EditProduct = () => {
             <div className="mt-1 relative">
               <textarea
                 id="description"
-                {...register("description", { required: true } )}
+                {...register("description", 
+                  { 
+                    required: {
+                      value: true,
+                      message: "Este campo es requerido"
+                    }, 
+                    minLength: {
+                      value: 30,
+                      message: "La descripción debe tener al menos 30 caracteres"
+                    }
+                  }
+                )}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
+            {errors.description && <p className="pt-1 text-red-500">
+              {errors.description.message as string}
+            </p>}
           </div>
 
           {/* CANTIDAD */}
@@ -83,6 +109,7 @@ const EditProduct = () => {
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
+            {errors.quantity && <p className="pt-1 text-red-500">Este campo es requerido</p>}
           </div>
 
            {/* PRICE */}
@@ -103,6 +130,7 @@ const EditProduct = () => {
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
+            {errors.price && <p className="pt-1 text-red-500">Este campo es requerido</p>}
           </div>
 
            {/* CATEGORIA */}
@@ -189,7 +217,13 @@ const EditProduct = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="group relative w-1/2 flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
+            disabled={!isDirty}
+            className="
+              group relative w-1/2 flex justify-center py-2.5 px-4 border border-transparent
+              rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none 
+              focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium
+              disabled:bg-gray-400 disabled:cursor-not-allowed
+            "
           >
             Update Product
           </button>
