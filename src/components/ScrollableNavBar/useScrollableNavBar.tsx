@@ -7,19 +7,19 @@ import { Category } from "../../interfaces/categories";
 import { useAuthStore } from "../../store/authZustandStore";
 
 const useScrollableNavBar = () => {
-  const [activeSection, setActiveSection] = useState('');
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [activeSection, setActiveSection]   = useState('');
+  const [showLeftArrow, setShowLeftArrow]   = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
   const desktopScrollRef = useRef<HTMLDivElement>(null);
-  const mobileScrollRef = useRef<HTMLDivElement>(null);
-  const touchStartRef = useRef<number | null>(null);
+  const mobileScrollRef  = useRef<HTMLDivElement>(null);
+  const touchStartRef    = useRef<number | null>(null);
 
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout }   = useAuthStore();
   const { categories, getCategories } = useCategoriesStore();
-  const { changeFilterSelected } = filtersSelectedStore();
-  const location = useLocation();
-  const navigate  = useNavigate();
+  const { changeFilterSelected, filtersSelected }      = filtersSelectedStore();
+  const location                      = useLocation();
+  const navigate                      = useNavigate();
 
   const handleScroll = (container: HTMLDivElement | null): void => {
     if (!container) return;
@@ -72,6 +72,7 @@ const useScrollableNavBar = () => {
    * @param category  
    */
   const handlerOnClickFilter = (category: Category): void => {
+    console.log("Selected category:", category);
     changeFilterSelected({category});
 
     if (location.pathname !== '/products-list') {
@@ -142,44 +143,22 @@ const useScrollableNavBar = () => {
     return () => cancelAnimationFrame(rafId);
   }, [categories]);
 
-  // Use a ResizeObserver to detect when the scroll container's content
-  // or size changes (e.g. fonts/images load, or categories are rendered)
-  // and re-evaluate arrows accordingly.
-  // useEffect(() => {
-  //   if (typeof window === 'undefined') return;
-
-  //   let ro: ResizeObserver | null = null;
-
-  //   if (typeof (window as any).ResizeObserver !== 'undefined') {
-  //     ro = new (window as any).ResizeObserver(() => {
-  //       handleScroll(desktopScrollRef.current);
-  //       handleScroll(mobileScrollRef.current);
-  //     });
-
-  //     if (desktopScrollRef.current) ro.observe(desktopScrollRef.current);
-  //     if (mobileScrollRef.current) ro.observe(mobileScrollRef.current);
-  //   } else {
-  //     // Fallback: re-check on window resize
-  //     const onResize = () => {
-  //       handleScroll(desktopScrollRef.current);
-  //       handleScroll(mobileScrollRef.current);
-  //     };
-  //     window.addEventListener('resize', onResize);
-  //     return () => window.removeEventListener('resize', onResize);
-  //   }
-
-  //   return () => {
-  //     ro?.disconnect();
-  //   };
-  // }, [categories]);
-
+  /**
+   * Me lleva a la pagina principal de productos y resetea el filtro a "All" con id null
+   */
+  const GoHome = (): void => {
+    if ( filtersSelected?.category.id !== null ) {
+      changeFilterSelected({category: {id: null, name: 'All'}});
+      navigate('/products-list');
+    }
+  };
 
   return {
-    activeSection, 
-    setActiveSection, 
-    showLeftArrow, 
-    setShowLeftArrow, 
-    showRightArrow, 
+    activeSection,
+    setActiveSection,
+    showLeftArrow,
+    setShowLeftArrow,
+    showRightArrow,
     setShowRightArrow,
     desktopScrollRef,
     mobileScrollRef,
@@ -193,7 +172,8 @@ const useScrollableNavBar = () => {
     categories,
     isAuthenticated,
     handleLogout,
-  }
+    GoHome,
+  };
 };
 
 export default useScrollableNavBar;

@@ -7,8 +7,8 @@ const filtersSelectedStore = create<filtersSelectedState>((set) => ({
 
   filtersSelected : null,
 
-  changeFilterSelected: (newFilterValue: filtersSelected) => { 
-    console.log("Updating filtersSelected with:", newFilterValue);
+  changeFilterSelected: (newFilterValue: filtersSelected) => {
+    
     set((state: filtersSelectedState) => ({
       filtersSelected : {...state.filtersSelected, ...newFilterValue}
     }))

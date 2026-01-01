@@ -2,27 +2,33 @@ import { Shirt, X, Cross, ThumbsUp, Euro  } from "lucide-react";
 
 import useEditProduct from "./useEditProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
+import { Key } from "react";
 
 const EditProduct = () => {
 
   const {
     addImage,
     removeImage,
-    handlerChange,
     handleSubmit,
-    productDetail,
     imageUrl,
     setImageUrl,
     showImageField,
     setShowImageField,
     categories,
+    register,
+    errors,
+    onSubmit,
+    watch,
   } = useEditProduct();
 
   return (
     <>
       <GoBackBtn />
-      
-      <form className="mt-8 space-y-6 px-6" onSubmit={ (e) => handleSubmit(e) }>
+      <form 
+        id="formSubmit"
+        className="mt-8 space-y-6 px-6"
+        onSubmit={ handleSubmit(onSubmit) } 
+      >
         <div className="space-y-4">
 
           {/* NAME */}
@@ -39,16 +45,11 @@ const EditProduct = () => {
 
               <input
                 id="name"
-                name="name"
-                autoComplete="name"
-                type="string"
-                required
-                value={productDetail?.name || ""}
-                onChange={(e) => handlerChange(e)}
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder=""
+                {...register("name", { required: true } )}
               />
             </div>
+              {errors.name && <p className="perror pt-2">Requerido</p>}
           </div>
 
           {/* DESCRIPCION */}
@@ -61,12 +62,8 @@ const EditProduct = () => {
             <div className="mt-1 relative">
               <textarea
                 id="description"
-                name="description"
-                autoComplete="description"
-                value={productDetail?.description || ""}
-                onChange={(e) => handlerChange(e)}
+                {...register("description", { required: true } )}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder=""
               />
             </div>
           </div>
@@ -82,13 +79,8 @@ const EditProduct = () => {
 
               <input
                 id="quantity"
-                name="quantity"
-                autoComplete="quantity"
-                type="number"
-                value={productDetail?.quantity || ""}
-                onChange={(e) => handlerChange(e)}
+               {...register("quantity", { required: true } )}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="0"
               />
             </div>
           </div>
@@ -107,14 +99,8 @@ const EditProduct = () => {
 
               <input
                 id="price"
-                name="price"
-                autoComplete="price"
-                type="number"
-                required
-                value={productDetail?.price || ""}
-                onChange={(e) => handlerChange(e)}
+                {...register("price", { required: true } )}
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="0.00"
               />
             </div>
           </div>
@@ -128,15 +114,11 @@ const EditProduct = () => {
             {/* CATEGORIA */}
             <div className="mt-1 relative">
               <select
-                id="category"
-                required
-                name="category"
-                value={productDetail?.category}
-                onChange={(e) => handlerChange(e)}
+                {...register("category", { required: true } )}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  <option key={cat.id} value={cat.id ?? 0}>{cat.name}</option>
                 ))}
               </select>
             </div>
@@ -174,7 +156,7 @@ const EditProduct = () => {
 
         {/* IMAGENES Y BTN DE AGREGAR */}
         <div className="flex gap-3 flex-wrap my-6 px-6">
-          {productDetail?.images?.map((img, index) => (
+          {watch().images?.map((img: { original: string | undefined; }, index: Key | null | undefined) => (
             <div key={index} className="relative">
               <img
                 src={img.original}
@@ -193,7 +175,10 @@ const EditProduct = () => {
           ))}
 
           <div 
-            onClick={() => setShowImageField(!showImageField)}
+            onClick={(e) => {
+              e.preventDefault();
+              return setShowImageField(!showImageField);
+            }}
             className="size-24 flex items-center justify-center border-2 border-dashed border-gray-300 rounded lg:cursor-pointer">
             <button className="flex justy">
               <Cross className="h-10 w-10 text-gray-400 lg:cursor-pointer" />
