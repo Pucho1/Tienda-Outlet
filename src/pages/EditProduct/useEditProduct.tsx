@@ -6,6 +6,7 @@ import ProductService from "../../service/ProductService";
 import { Product } from "../../interfaces/product";
 import useMapers from "../../utilities/useMapers";
 import useCategoriesStore from "../../store/categoriesStore";
+import useProducts from "../../utilities/useProducts";
 
 const useEditProduct = () => {
 
@@ -14,11 +15,13 @@ const useEditProduct = () => {
   const [imageUrl, setImageUrl]              = useState("");
   const [showImageField, setShowImageField]  = useState<boolean>(false);
 
-  const location             = useLocation();
-  const id                   = location.pathname.split("/").pop() || "";
-  const { mapDataToProduct } = useMapers();
-  const { categories }       = useCategoriesStore();
-  const { register, handleSubmit, watch, formState: { errors, isDirty }, reset, setValue } = useForm();
+  const location                    = useLocation();
+  const id                          = location.pathname.split("/").pop() || "";
+  const { mapDataToProduct }        = useMapers();
+  const { categories }              = useCategoriesStore();
+  const { isValidUrl, imageExists } = useProducts();
+  
+  const { register, handleSubmit, watch, formState: { errors, isDirty, isValid }, reset, setValue, } = useForm();
 
   /**
    * Se encarga de enviar la solicitud para actualizar el producto.
@@ -86,6 +89,9 @@ const useEditProduct = () => {
     watch,
     onSubmit,
     isDirty,
+    isValidUrl,
+    imageExists,
+    isValid,
   };
 };
 

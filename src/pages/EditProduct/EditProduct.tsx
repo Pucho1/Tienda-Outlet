@@ -1,8 +1,8 @@
+import { Key } from "react";
 import { Shirt, X, Cross, ThumbsUp, Euro  } from "lucide-react";
 
 import useEditProduct from "./useEditProduct";
 import GoBackBtn from "../../components/goBackBtn/GoBackBtn";
-import { Key } from "react";
 
 const EditProduct = () => {
 
@@ -20,6 +20,9 @@ const EditProduct = () => {
     onSubmit,
     watch,
     isDirty,
+    isValidUrl,
+    imageExists,
+    isValid,
   } = useEditProduct();
 
   return (
@@ -31,7 +34,6 @@ const EditProduct = () => {
         onSubmit={ handleSubmit(onSubmit) } 
       >
         <div className="space-y-4">
-
           {/* NAME */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -47,7 +49,7 @@ const EditProduct = () => {
               <input
                 id="name"
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-               {...register("name", 
+               {...register("name",
                   { 
                     required: {
                       value: true,
@@ -70,11 +72,10 @@ const EditProduct = () => {
               Descripcion
             </label>
 
-            {/* NAME */}
             <div className="mt-1 relative">
               <textarea
                 id="description"
-                {...register("description", 
+                {...register("description",
                   { 
                     required: {
                       value: true,
@@ -102,7 +103,6 @@ const EditProduct = () => {
 
             {/* NAME */}
             <div className="mt-1 relative">
-
               <input
                 id="quantity"
                {...register("quantity", { required: true } )}
@@ -153,32 +153,47 @@ const EditProduct = () => {
           </div>
 
           {/* IMAGEN URL */}
-          <div className={` transition-all duration-300 ease-out transform
-            ${showImageField 
-              ? "opacity-100 translate-y-0 max-h-40" 
+          <div className={`transition-all duration-300 ease-out transform
+            ${showImageField
+              ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-2 max-h-0 pointer-events-none"}
-            overflow-hidden
-          `}>
-            <input
-              className="block w-full pr-12 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              type="text"
-              placeholder="Escriba la URL de la nueva imagen"
-              onChange={(e) => setImageUrl(e.target.value)}
-              value={imageUrl}
-              onKeyDown={(e) => {
-                if (e.key === "Enter")  addImage();
-              }}
-            />
+            `}
+          >
+            <div className="overflow-hidden max-h-40 relative">
+              <input
+                className="block w-full pr-12 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                type="text"
+                placeholder="Escriba la URL de la nueva imagen"
+                value={imageUrl}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter")  addImage();
+                }}
+                {...register("imageUrl",
+                    {
+                      onChange: (e) => setImageUrl(e.target.value),
+                      validate: async (value: string) => {
+                        if (!isValidUrl(value)) {
+                          return "La URL no es válida";
+                        }
 
-            <button
-              type="button"
-              onClick={addImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2
-                        text-indigo-600 hover:text-indigo-800"
-              aria-label="Agregar imagen"
-            >
-              <ThumbsUp size={20} />
-            </button>
+                        const exists = await imageExists(value);
+                        return exists || "La imagen no existe o no se puede cargar";
+                      }
+                    }
+                  )}
+              />
+
+              <button
+                type="button"
+                onClick={addImage}
+                className="absolute right-2 top-1/2 -translate-y-1/2
+                          text-indigo-600 hover:text-indigo-800"
+                aria-label="Agregar imagen"
+              >
+                <ThumbsUp size={20} />
+              </button>
+            </div>
+            {errors.imageUrl && <p className="pt-1 text-red-500">{errors.imageUrl.message as string}</p>}
           </div>
         </div>
 
@@ -214,10 +229,11 @@ const EditProduct = () => {
           </div>
         </div>
 
+        {/*submit button */}
         <div className="flex justify-center">
           <button
             type="submit"
-            disabled={!isDirty}
+            disabled={ !isDirty && !isValid }
             className="
               group relative w-1/2 flex justify-center py-2.5 px-4 border border-transparent
               rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none 

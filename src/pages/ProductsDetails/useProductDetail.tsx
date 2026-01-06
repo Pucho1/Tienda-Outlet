@@ -19,8 +19,15 @@ const useProductDetail = ( ) => {
 			});
 	}, [id]);
 
+	const quedanMenosDeDiez = (): boolean => {
+		if (productDetail && productDetail.quantity < 10) {
+			return true;
+		}
+		return false;
+	};
 
-  return { productDetail };
+
+  return { productDetail, quedanMenosDeDiez };
 };
 
 export default useProductDetail;

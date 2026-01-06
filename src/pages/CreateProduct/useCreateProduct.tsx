@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import ProductService from "../../service/ProductService";
@@ -6,21 +7,25 @@ import { Product } from "../../interfaces/product";
 import useCategoriesStore from "../../store/categoriesStore";
 import { useAlert } from "../../context/AlertContext";
 import useMapers from "../../utilities/useMapers";
+import useProducts from "../../utilities/useProducts";
 
 const useCreateProduct = () => {
 
   const [productData, setProductData]       = useState<Product>();
-  const [imageUrl, setImageUrl]             = useState("");
+  const [imageUrl, setImageUrl]             = useState<string>("");
   const [showImageField, setShowImageField] = useState<boolean>(false);
 
-  const { showAlert }        = useAlert();
-  const { categories }       = useCategoriesStore();
-  const { mapDataToProduct } = useMapers();
-  const navigate 			       = useNavigate();
+  const { showAlert }               = useAlert();
+  const { categories }              = useCategoriesStore();
+  const { mapDataToProduct }        = useMapers();
+  const navigate 			              = useNavigate();
+  const { isValidUrl, imageExists } = useProducts();
 
+  const { register, handleSubmit, watch, formState: { errors, isDirty, isValid }, setValue } = useForm();
 
-  const createProduct =  (newProduct: Product) => {
-    ProductService().createProduct(newProduct as Product)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const createProduct =  (data: any) => {
+    ProductService().createProduct(data)
       .then((response) => {
         if (response.status === 201) {
           showAlert({
@@ -43,30 +48,16 @@ const useCreateProduct = () => {
       });
   };
 
-  const handleSubmit = (e: React.FormEvent ) => {
-    e.preventDefault();
-    const newProduct = mapDataToProduct(productData as Product);
+  const onSubmit = handleSubmit((data) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const {imageUrl, ...rest}  = data;
+      const newProduct = mapDataToProduct(rest as Product);
+      createProduct(newProduct as Product);
+  });
 
-    createProduct(newProduct as Product);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const removeImage = (index: any) => {
-    setProductData((prev) => {
-      if (!prev) return prev;
-      const updatedImages = prev.images.filter((_, i) => i !== index);
-      return { ...prev, images: updatedImages };
-    });
-  };
-
-  const handlerChange = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const removeImage = (index: number) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setProductData((prev: any) => {
-      const { name, value } = e.target as HTMLInputElement;
-      return { ...prev, [name]: value };
-    })
+    setValue("images", watch().images.filter((_: any, i: any) => i !== index));
   };
 
   /**
@@ -74,38 +65,19 @@ const useCreateProduct = () => {
    * @returns
    */
   const addImage = () => {
+
     if (!imageUrl.trim()) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setProductData((prev: any) => {
-
-      if (!prev) {
-        return { 
-          images: [ {"original":imageUrl.trim()}]
-        };
-      };
-
-      if (!prev.images) {
-        return { 
-          ...prev,
-          images: [ {"original":imageUrl.trim()}]
-        };
-      }
-
-      return {
-        ...prev,
-        images: [...prev.images, {"original":imageUrl.trim()}],
-      };
-    });
-
+    setValue("images",
+      watch().images ? [ ...watch().images, {"original":imageUrl.trim()}]  : [{"original":imageUrl.trim()}],
+      { shouldValidate: true }
+    );
     setImageUrl("");
   };
   
-  return { 
+  return {
     addImage,
     removeImage,
-    handlerChange,
-    handleSubmit,
     productData,
     setProductData,
     imageUrl,
@@ -113,6 +85,14 @@ const useCreateProduct = () => {
     showImageField,
     setShowImageField,
     categories,
+    register,
+    errors,
+    watch,
+    onSubmit,
+    isDirty,
+    isValidUrl,
+    imageExists,
+    isValid,
   };
 };
 
