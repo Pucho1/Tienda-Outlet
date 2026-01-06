@@ -154,33 +154,6 @@ export function ScrollableNavbar() {
           </div>
         </div>
       </nav>
-
-      {/* {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden">
-          <div className="fixed right-0 top-0 bottom-0 w-64 bg-white shadow-xl p-6 overflow-y-auto">
-            <div className="flex flex-col gap-2 mt-16">
-              {sections.map((section) => {
-                const id = section.toLowerCase().replace(/\s+/g, '-');
-                const isActive = activeSection === id;
-
-                return (
-                  <button
-                    key={section}
-                    onClick={() => scrollToSection(section)}
-                    className={`px-4 py-3 rounded-lg text-left font-medium transition-all duration-200 ${
-                      isActive
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    {section}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )} */}
     </>
   );
 }

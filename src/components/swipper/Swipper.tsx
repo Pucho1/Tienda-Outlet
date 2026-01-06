@@ -10,8 +10,6 @@ import "./swipper.css";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Swipper = ({ images }: { images: any[] }) => {
 
-	// const imagesToShow = images.length === 0  ?  basedImages : images
-
   return (
 		<Swiper
 			className="mySwiper"

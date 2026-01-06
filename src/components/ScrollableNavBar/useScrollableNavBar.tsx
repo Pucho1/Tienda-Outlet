@@ -17,9 +17,11 @@ const useScrollableNavBar = () => {
 
   const { isAuthenticated, logout }   = useAuthStore();
   const { categories, getCategories } = useCategoriesStore();
-  const { changeFilterSelected, filtersSelected }      = filtersSelectedStore();
   const location                      = useLocation();
   const navigate                      = useNavigate();
+  
+  const { changeFilterSelected, filtersSelected }      = filtersSelectedStore();
+
 
   const handleScroll = (container: HTMLDivElement | null): void => {
     if (!container) return;
