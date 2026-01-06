@@ -23,7 +23,7 @@ const Products = () => {
 			{ isAuthenticated && <div className="flex justify-end">
 				<div
 					onClick={() => goToCreate()}
-					className="w-60 h-12 flex items-center justify-center border-2 border-dashed border-gray-300 rounded lg:cursor-pointer">
+					className="w-60 h-12 flex items-center justify-center border-2 border-dashed border-gray-300 rounded md:cursor-pointer">
 					<button className="flex flex-row lg:cursor-pointer">
 						<p className="flex pr-5 justify-center items-center">Adicionar producto</p>
 						<Cross className="h-10 w-10 text-gray-400" />

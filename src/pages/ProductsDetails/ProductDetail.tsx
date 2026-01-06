@@ -6,7 +6,7 @@ import GoBackBtn from '../../components/goBackBtn/GoBackBtn';
 
 const ProductDetail = () => {
 
-  const { productDetail } = useProductDetail();
+  const { productDetail, quedanMenosDeDiez } = useProductDetail();
 
 
   if (!productDetail) {
@@ -29,7 +29,6 @@ const ProductDetail = () => {
         
         <div className='px-6'>
           <h1 className="text-3xl font-bold text-gray-900">{productDetail.name}</h1>
-          <p className="text-gray-600 mt-2">{productDetail.category}</p>
           
           <div className="mt-6">
             <h2 className="text-2xl font-bold text-blue-600">
@@ -44,8 +43,8 @@ const ProductDetail = () => {
           
           <div className="mt-6 flex items-center">
             <Package className="h-5 w-5 text-gray-600 mr-2" />
-            <span className="text-gray-600">
-              Stock disponible: <span className="font-semibold">{productDetail.quantity} unidades</span>
+            <span className={` ${quedanMenosDeDiez()  ? "text-red-600": "text-gray-600"}`}>
+              <span className="font-semibold">{ quedanMenosDeDiez() ? "Quedan pocas unidades" : "Disponible en Stock"} </span>
             </span>
           </div>
           

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 import ProductService from "../../service/ProductService";
 import { Product } from "../../interfaces/product";
 import filtersSelectedStore from "../../store/filtersSelected";
 import { useAuthStore } from "../../store/authZustandStore";
-import { useNavigate } from "react-router";
 
 
 const useProducts = () => {
@@ -18,7 +18,7 @@ const useProducts = () => {
 	const { isAuthenticated } = useAuthStore();
 
 	const getProductsList = (): void => {
-		ProductService().getProductsListByFilter(filtersSelected?.category.id)
+		ProductService().getProductsListByFilter(filtersSelected?.category.id ?? null)
 			.then((response) => {
 				setProductList(response.data);
 				setLoading(false);

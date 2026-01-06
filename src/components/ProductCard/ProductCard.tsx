@@ -15,7 +15,7 @@ export const ProductCard = ({ deleteProduct, product }: ProductCardProps) => {
     <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative flex flex-col">
       
       {/* IMAGES */}
-      <div 
+      <div
         onClick={() => goDetail(product)}
         className="relative aspect-square bg-gray-50 cursor-pointer w-full object-contain object-center"
       >
