@@ -27,17 +27,12 @@ export const useAuthStore = create<AuthState>()(
 
     login: (loginData: LoginResponse) => set(() => {
 
-      console.log('loginData en store:', loginData);
-
       if (loginData.accessToken === null) {
         return { useReg: null, accessToken: null, isAuthenticated: false };
       };
 
       const { accessToken, ...rest } = loginData;
 
-      // if (!accessToken || !refreshToken) {
-      //   sessionStorage.setItem('refreshToken', refreshToken);
-      // }
       if ( accessToken ) {
         sessionStorage.setItem('accessToken', accessToken);
       }

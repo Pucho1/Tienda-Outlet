@@ -21,7 +21,7 @@ const useLogin = () => {
 			.login(email, password)
 			.then(res => {
 				authSuccess(res.data ?? '');
-				setAccessToken(res.data.token);
+				setAccessToken(res.data.accessToken);
 			})
 			.catch(err => {
 				console.error('Error:', err.response ? err.response.data : err.message);
