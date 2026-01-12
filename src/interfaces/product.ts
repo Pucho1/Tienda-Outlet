@@ -20,3 +20,7 @@ export interface ProductCardProps {
   product: Product;
   deleteProduct: ((id: number) => void)
 }
+
+export interface ProductForm extends Product {
+  imageUrl: string
+}

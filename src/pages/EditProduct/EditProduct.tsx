@@ -19,10 +19,9 @@ const EditProduct = () => {
     errors,
     onSubmit,
     watch,
-    isDirty,
     isValidUrl,
     imageExists,
-    isValid,
+    isFormValid,
   } = useEditProduct();
 
   return (
@@ -172,6 +171,7 @@ const EditProduct = () => {
                     {
                       onChange: (e) => setImageUrl(e.target.value),
                       validate: async (value: string) => {
+                        console.log("Validating image URL:", value);
                         if (!isValidUrl(value)) {
                           return "La URL no es válida";
                         }
@@ -233,7 +233,7 @@ const EditProduct = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            disabled={ !isDirty && !isValid }
+            disabled={ !isFormValid() }
             className="
               group relative w-1/2 flex justify-center py-2.5 px-4 border border-transparent
               rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none 
@@ -245,6 +245,8 @@ const EditProduct = () => {
           </button>
         </div>
       </form>
+
+      {JSON.stringify(watch())}
     </>
   );
 };

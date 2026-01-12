@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import { useForm } from "react-hook-form";
 
 import ProductService from "../../service/ProductService";
-import { Product } from "../../interfaces/product";
+import { Product, ProductForm } from "../../interfaces/product";
 import useMapers from "../../utilities/useMapers";
 import useCategoriesStore from "../../store/categoriesStore";
 import useProducts from "../../utilities/useProducts";
@@ -21,7 +21,25 @@ const useEditProduct = () => {
   const { categories }              = useCategoriesStore();
   const { isValidUrl, imageExists } = useProducts();
   
-  const { register, handleSubmit, watch, formState: { errors, isDirty, isValid }, reset, setValue, } = useForm();
+  const { 
+    register, 
+    handleSubmit, 
+    watch, 
+    formState: { errors, isDirty, isValid, dirtyFields }, reset, setValue, } 
+  = useForm<ProductForm>(
+    {
+      mode: "onChange",
+      defaultValues: {
+        id: 0,
+        name: "",
+        description: "",
+        price: 0,
+        quantity: 0,
+        category: "",
+        images: [],
+      },
+    }
+  );
 
   /**
    * Se encarga de enviar la solicitud para actualizar el producto.
@@ -59,19 +77,54 @@ const useEditProduct = () => {
 	useEffect(() => {
 		ProductService().getProductById(id)
 			.then((response) => {
-				// setProductDetail(response.data);
         setImages(response.data.images);
-        reset(response.data);
+        reset({
+          id: response.data.id,
+          name: response.data!.name,
+          price: response.data.price,
+          description: response.data.description,
+          category: response.data.category,
+          images: response.data.images,
+          quantity: response.data.quantity
+        });
 			})
 			.catch((error) => {
 				console.error("Error fetching productDetail:", error);
 			});
 	}, [id]);
 
+  /**
+   * Maneja los cambios en el formulario.
+   * @param e 
+   */
   const handlerFormChange = (e: React.FormEvent) => {
     e.preventDefault();
   };
-  
+
+
+/**
+ * verifica si el formulario tiene cambios reales e ignora el checkeo el campo de la URL de la imagen.
+ * @returns boolean
+ */
+  const isFormValid = (): boolean => {
+
+    // 1. Extrae el campo que importa de los campos sucios
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { imageUrl, ...restDirtyFields } = dirtyFields;
+
+    // 2. Verificam si hay otros campos que realmente han cambiado
+    const hasRealChanges = Object.keys(restDirtyFields).length > 0;
+
+    // 2. Check de errores reales
+    // Obtiene todos los nombres de campos que tienen errores
+    const fieldsWithErrors = Object.keys(errors);
+
+    // Filtra los errores para ver si hay alguno que NO sea el campo ignorado
+    const hasRealErrors = fieldsWithErrors.some(fieldName => fieldName !== "imageUrl");
+
+    return hasRealChanges && !hasRealErrors;
+  };
+
   return {
     addImage,
     removeImage,
@@ -92,6 +145,7 @@ const useEditProduct = () => {
     isValidUrl,
     imageExists,
     isValid,
+    isFormValid,
   };
 };
 

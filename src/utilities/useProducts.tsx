@@ -14,7 +14,7 @@ const useProducts = () => {
   };
 
   /**
-   * Me a naliza si una URL es válida mediante el constructor URL.
+   * Me analiza si una URL es válida mediante el constructor URL.
    * @param url Url a analizar.
    * @returns Devulve a true si la imagen existe, false en caso contrario.
    */
